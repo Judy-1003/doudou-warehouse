@@ -7,7 +7,6 @@
   <img src="docs/screenshots/home-cup.png" height="380" alt="首页选豆子选辅料" />
   <img src="docs/screenshots/home-summary.png" height="380" alt="首页今日合计与日历" />
   <img src="docs/screenshots/warehouse.png" height="380" alt="豆仓库存管理" />
-  <img src="docs/screenshots/day-logs-edit.png" height="380" alt="修改某一杯记录" />
 </p>
 
 📱 **[点击查看界面演示](https://judy-1003.github.io/doudou-warehouse/demo.html)** —— 网页还原版，不用装微信开发者工具也能看效果
