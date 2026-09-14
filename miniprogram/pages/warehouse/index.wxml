@@ -1,0 +1,113 @@
+<view class="page">
+  <view class="eyebrow top-eyebrow">COFFEE SHELF</view>
+  <view class="row-between header-row">
+    <view class="hand-title">{{tab === 'bean' ? '我的豆仓' : '我的饮品架'}}</view>
+    <view class="segment">
+      <view class="segment-item {{tab === 'bean' ? 'active' : ''}}" data-tab="bean" bindtap="switchTab">豆仓</view>
+      <view class="segment-item {{tab === 'drink' ? 'active' : ''}}" data-tab="drink" bindtap="switchTab">饮品架</view>
+    </view>
+  </view>
+
+  <block wx:if="{{tab === 'bean'}}">
+    <view class="subtitle numeric">{{beanSummary}}</view>
+    <navigator url="/pages/bean-form/index" class="dark-entry">
+      <view><view class="entry-title">登记入库</view><view class="entry-sub">添加咖啡豆参数和日期</view></view><text>›</text>
+    </navigator>
+
+    <block wx:if="{{openBeans.length}}">
+      <view class="eyebrow">正在喝 · {{openBeans.length}} 包</view>
+      <view wx:for="{{openBeans}}" wx:key="id" class="card bean-card" data-id="{{item.id}}" bindtap="openBean" bindlongpress="deleteBean">
+        <view class="row-between"><text class="badge {{item.statusTone}}">{{item.statusLabel}}</text><text wx:if="{{item.brandText}}" class="muted">{{item.brandText}}</text></view>
+        <view class="bean-name-row"><text class="bean-name">{{item.name}}</text><text wx:if="{{item.roastText}}" class="roast-chip">{{item.roastText}}</text></view>
+        <view wx:if="{{item.metaText}}" class="subtext">{{item.metaText}}</view>
+        <view wx:if="{{item.flavors.length}}" class="flavors"><text wx:for="{{item.flavors}}" wx:for-item="flavor" wx:key="*this">{{flavor}}</text></view>
+        <view class="row-between stock-line"><text class="numeric">余量 {{item.stockG}}g / {{item.initialText}}g</text><text class="numeric">{{item.ratingText}}</text></view>
+        <view class="progress"><view class="progress-fill" style="width:{{item.stockPercent}}%"></view></view>
+        <view class="row-between action-row"><text class="muted numeric">{{item.forecastText}}</text><view class="action-buttons"><view class="bean-action" data-id="{{item.id}}" data-action="{{item.storageAction}}" catchtap="beanAction" catchlongpress="stopPropagation">{{item.storageActionText}}</view><view class="bean-action" data-id="{{item.id}}" data-action="finish" catchtap="beanAction" catchlongpress="stopPropagation">喝完</view></view></view>
+      </view>
+    </block>
+
+    <block wx:if="{{sealedBeans.length}}">
+      <view class="eyebrow">未启封 · {{sealedBeans.length}} 包</view>
+      <view wx:for="{{sealedBeans}}" wx:key="id" class="card bean-card" data-id="{{item.id}}" bindtap="openBean" bindlongpress="deleteBean">
+        <view class="row-between"><text class="badge {{item.statusTone}}">{{item.statusLabel}}</text><text wx:if="{{item.brandText}}" class="muted">{{item.brandText}}</text></view>
+        <view class="bean-name-row"><text class="bean-name">{{item.name}}</text><text wx:if="{{item.roastText}}" class="roast-chip">{{item.roastText}}</text></view>
+        <view wx:if="{{item.metaText}}" class="subtext">{{item.metaText}}</view>
+        <view wx:if="{{item.flavors.length}}" class="flavors"><text wx:for="{{item.flavors}}" wx:for-item="flavor" wx:key="*this">{{flavor}}</text></view>
+        <view class="row-between stock-line"><text class="numeric">余量 {{item.stockG}}g / {{item.initialText}}g</text><text class="numeric">¥{{item.unitPriceText}}/g</text></view>
+        <view class="progress"><view class="progress-fill" style="width:{{item.stockPercent}}%"></view></view>
+        <view class="action-row action-right action-buttons"><view class="bean-action" data-id="{{item.id}}" data-action="{{item.storageAction}}" catchtap="beanAction" catchlongpress="stopPropagation">{{item.storageActionText}}</view><view class="bean-action solid" data-id="{{item.id}}" data-action="open" catchtap="beanAction" catchlongpress="stopPropagation">启封</view></view>
+      </view>
+    </block>
+
+    <block wx:if="{{finishedBeans.length}}">
+      <view class="eyebrow">已归档 · {{finishedBeans.length}} 包</view>
+      <view wx:for="{{finishedBeans}}" wx:key="id" class="card bean-card archived" data-id="{{item.id}}" bindtap="openBean" bindlongpress="deleteBean">
+        <view class="row-between"><text class="badge muted-badge">已喝完</text><text wx:if="{{item.brandText}}" class="muted">{{item.brandText}}</text></view>
+        <view class="bean-name-row"><text class="bean-name">{{item.name}}</text><text wx:if="{{item.roastText}}" class="roast-chip">{{item.roastText}}</text></view>
+        <view wx:if="{{item.metaText}}" class="subtext">{{item.metaText}}</view>
+        <view class="row-between stock-line"><text class="numeric">喝完 {{item.finishedAt}}</text><text class="numeric">{{item.ratingText}}</text></view>
+      </view>
+    </block>
+
+    <view wx:if="{{!openBeans.length && !sealedBeans.length && !finishedBeans.length}}" class="empty warehouse-empty">还没有咖啡豆</view>
+  </block>
+
+  <block wx:else>
+    <navigator url="/pages/drink-form/index" class="dark-entry drink-entry">
+      <view><view class="entry-title">添加饮品</view><view class="entry-sub">填写品牌、价格和营养成分</view></view><text>›</text>
+    </navigator>
+    <view class="eyebrow">牛奶 / 奶类 · {{milkAddons.length}}</view>
+    <view wx:for="{{milkAddons}}" wx:key="id" class="card addon-card" data-id="{{item.id}}" bindlongpress="deleteAddon">
+      <view class="row-between"><text class="addon-name">{{item.brand}}</text><text class="numeric">¥{{item.unitPriceText}}/100ml</text></view>
+      <view class="muted numeric">¥{{item.price}} / {{item.volumeText}}</view>
+      <view class="addon-stock">
+        <view class="row-between addon-stock-line"><text class="numeric">余量 {{item.stockText}} · 约 {{item.cupsLeft}} 杯</text><view class="restock" data-id="{{item.id}}" catchtap="restockAddon" catchlongpress="suppressRestock">补满</view></view>
+        <view class="progress"><view class="progress-fill" style="width:{{item.stockPercent}}%"></view></view>
+      </view>
+      <view class="nutrition-row">
+        <view><text class="numeric">{{item.kcalPer100Ml}}</text><text>热量 kcal</text></view>
+        <view><text class="numeric">{{item.proteinPer100Ml}}</text><text>蛋白质 g</text></view>
+        <view><text class="numeric">{{item.fatPer100Ml}}</text><text>脂肪 g</text></view>
+      </view>
+      <view class="muted numeric">每杯 {{item.defaultMl}}ml 约 ¥{{item.defaultCostText}}</view>
+    </view>
+    <view wx:if="{{!milkAddons.length}}" class="empty compact-empty">还没有牛奶或奶类</view>
+
+    <view class="eyebrow">椰子水 · {{coconutAddons.length}}</view>
+    <view wx:for="{{coconutAddons}}" wx:key="id" class="card addon-card" data-id="{{item.id}}" bindlongpress="deleteAddon">
+      <view class="row-between"><text class="addon-name">{{item.brand}}</text><text class="numeric">¥{{item.unitPriceText}}/100ml</text></view>
+      <view class="muted numeric">¥{{item.price}} / {{item.volumeText}}</view>
+      <view class="addon-stock">
+        <view class="row-between addon-stock-line"><text class="numeric">余量 {{item.stockText}} · 约 {{item.cupsLeft}} 杯</text><view class="restock" data-id="{{item.id}}" catchtap="restockAddon" catchlongpress="suppressRestock">补满</view></view>
+        <view class="progress"><view class="progress-fill" style="width:{{item.stockPercent}}%"></view></view>
+      </view>
+      <view class="kv"><text class="kv-label">含糖量</text><text class="numeric">{{item.sugarPer100Ml}} g / 100ml</text></view>
+      <view class="kv"><text class="kv-label">每杯 {{item.defaultMl}}ml</text><text class="numeric">约 ¥{{item.defaultCostText}}</text></view>
+    </view>
+    <view wx:if="{{!coconutAddons.length}}" class="empty compact-empty">还没有椰子水</view>
+
+    <block wx:for="{{customAddonGroups}}" wx:key="name" wx:for-item="group">
+      <view class="eyebrow">{{group.name}} · {{group.items.length}}</view>
+      <view wx:for="{{group.items}}" wx:key="id" wx:for-item="drink" class="card addon-card" data-id="{{drink.id}}" bindlongpress="deleteAddon">
+        <view class="row-between"><text class="addon-name">{{drink.brand}}</text><text class="numeric">¥{{drink.unitPriceText}}/100ml</text></view>
+        <view class="muted numeric">¥{{drink.price}} / {{drink.volumeText}}</view>
+        <view class="addon-stock">
+          <view class="row-between addon-stock-line"><text class="numeric">余量 {{drink.stockText}} · 约 {{drink.cupsLeft}} 杯</text><view class="restock" data-id="{{drink.id}}" catchtap="restockAddon" catchlongpress="suppressRestock">补满</view></view>
+          <view class="progress"><view class="progress-fill" style="width:{{drink.stockPercent}}%"></view></view>
+        </view>
+        <view class="kv"><text class="kv-label">默认用量</text><text class="numeric">{{drink.defaultMl}} ml · 约 ¥{{drink.defaultCostText}}</text></view>
+        <view wx:if="{{drink.kcalPer100Ml || drink.proteinPer100Ml || drink.fatPer100Ml || drink.sugarPer100Ml}}" class="nutrition-row custom-nutrition">
+          <view><text class="numeric">{{drink.kcalPer100Ml}}</text><text>热量 kcal</text></view>
+          <view><text class="numeric">{{drink.proteinPer100Ml}}</text><text>蛋白质 g</text></view>
+          <view><text class="numeric">{{drink.sugarPer100Ml}}</text><text>糖 g</text></view>
+        </view>
+      </view>
+    </block>
+  </block>
+</view>
+
+<view wx:if="{{snackbarVisible}}" class="snackbar">
+  <view class="snackbar-text">{{snackbarText}}</view>
+  <view class="snackbar-action" bindtap="undoAction">撤销</view>
+</view>

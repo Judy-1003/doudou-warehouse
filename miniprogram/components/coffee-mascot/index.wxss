@@ -1,0 +1,17 @@
+.mascot { position: relative; width: 150rpx; height: 176rpx; }
+.mascot.compact { transform: scale(.72); transform-origin: center bottom; }
+.bean { position: absolute; z-index: 2; left: 28rpx; top: 12rpx; width: 100rpx; height: 126rpx; border: 6rpx solid #4a3020; border-radius: 48% 52% 47% 53%; background: #8e5c33; transform: rotate(-4deg); }
+.bean-line { position: absolute; left: 45rpx; top: 0; width: 12rpx; height: 116rpx; border-radius: 60%; border-left: 7rpx solid #5a3517; transform: rotate(4deg); }
+.eye { position: absolute; top: 44rpx; width: 13rpx; height: 7rpx; border-top: 5rpx solid #3a2413; border-radius: 50%; }
+.eye-left { left: 24rpx; transform: rotate(-8deg); }
+.eye-right { right: 20rpx; transform: rotate(8deg); }
+.blush { position: absolute; top: 65rpx; width: 18rpx; height: 10rpx; border-radius: 50%; background: rgba(196,105,74,.4); }
+.blush-left { left: 10rpx; }.blush-right { right: 8rpx; }
+.smile { position: absolute; left: 40rpx; top: 69rpx; width: 25rpx; height: 15rpx; border-bottom: 5rpx solid #3a2413; border-radius: 50%; }
+.arm, .leg { position: absolute; z-index: 1; width: 34rpx; height: 5rpx; border-radius: 5rpx; background: #4a3020; transform-origin: left center; }
+.arm-left { left: 15rpx; top: 94rpx; transform: rotate(135deg); }
+.arm-right { left: 120rpx; top: 84rpx; transform: rotate(-40deg); }
+.leg { top: 137rpx; width: 40rpx; }
+.leg-left { left: 60rpx; transform: rotate(78deg); }.leg-right { left: 94rpx; transform: rotate(100deg); }
+.spark { position: absolute; color: #c79a56; font-size: 28rpx; }
+.spark-left { left: 0; top: 35rpx; }.spark-right { right: 0; top: 112rpx; font-size: 22rpx; }

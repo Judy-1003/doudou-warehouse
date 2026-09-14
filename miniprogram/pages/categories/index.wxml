@@ -1,0 +1,48 @@
+<view class="page">
+  <view class="eyebrow top-eyebrow">COFFEE TYPES</view>
+  <view class="row-between page-heading">
+    <view class="heading-copy"><view class="hand-title">咖啡品类</view><view class="subtitle">拖动右侧按钮排序，前三个展示在首页</view></view>
+    <button class="primary-button small-button add-button" bindtap="openAdd">＋ 新增</button>
+  </view>
+
+  <view class="category-list">
+    <view wx:for="{{categories}}" wx:key="id" class="card category-card {{draggingId === item.id ? 'dragging' : ''}}">
+      <view class="category-main">
+        <view class="position numeric">{{item.position}}</view>
+        <view class="category-copy">
+          <view class="category-name">{{item.name}}</view>
+          <view class="category-meta"><text>关联辅料</text><text>{{item.addonLabel}}</text></view>
+        </view>
+        <view class="drag-handle" data-id="{{item.id}}" catchtouchstart="startCategoryDrag" catchtouchmove="dragCategory" catchtouchend="finishCategoryDrag" catchtouchcancel="finishCategoryDrag">
+          <view class="drag-dot-grid"><text>•</text><text>•</text><text>•</text><text>•</text><text>•</text><text>•</text></view>
+        </view>
+      </view>
+      <view class="category-foot">
+        <view class="visibility-label {{item.homeVisible ? 'visible' : ''}}">{{item.homeVisible ? '首页展示' : '收在“其他”'}}</view>
+        <view class="more-actions">
+          <text data-id="{{item.id}}" bindtap="openEdit">修改</text>
+          <text class="delete" data-id="{{item.id}}" bindtap="deleteCategory">删除</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{editMode}}" class="sheet-mask" bindtap="closeEditor">
+  <view class="sheet" catchtap="stopPropagation">
+    <view class="sheet-grabber"></view>
+    <view class="sheet-title">{{editMode === 'add' ? '新增咖啡品类' : '修改咖啡品类'}}</view>
+    <view class="field"><text class="field-label">品类名称</text><input class="input" value="{{formName}}" bindinput="onNameInput" placeholder="例如：澳白" placeholder-class="placeholder" /></view>
+    <view class="field">
+      <text class="field-label">辅料</text>
+      <view class="pills editor-pills">
+        <view class="pill {{formAddonType === 'none' ? 'active' : ''}}" data-type="none" bindtap="selectAddon">不加</view>
+        <view class="pill {{formAddonType === 'milk' ? 'active' : ''}}" data-type="milk" bindtap="selectAddon">牛奶</view>
+        <view class="pill {{formAddonType === 'coconut' ? 'active' : ''}}" data-type="coconut" bindtap="selectAddon">椰子水</view>
+        <view wx:for="{{customAddonCategories}}" wx:key="*this" class="pill {{formAddonType === 'custom' && formAddonCategoryName === item ? 'active' : ''}}" data-type="custom" data-category="{{item}}" bindtap="selectAddon">{{item}}</view>
+      </view>
+    </view>
+    <button class="primary-button" bindtap="saveCategory">保 存</button>
+    <button class="secondary-button cancel-button" bindtap="closeEditor">取消</button>
+  </view>
+</view>

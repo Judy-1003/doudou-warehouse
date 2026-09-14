@@ -1,0 +1,36 @@
+.top-eyebrow { margin-top: 8rpx; }
+.header-row { align-items: flex-end; }
+.segment { display: flex; padding: 5rpx; border: 2rpx solid var(--line); border-radius: 24rpx; background: var(--paper-light); }
+.segment-item { padding: 12rpx 22rpx; border-radius: 19rpx; color: var(--sub); font-size: 23rpx; }
+.segment-item.active { color: #fbf5e8; background: linear-gradient(160deg, #6b4c37, var(--brown)); }
+.dark-entry { display: flex; align-items: center; justify-content: space-between; margin-top: 26rpx; padding: 26rpx 28rpx; border-radius: 28rpx; color: #f7eedd; background: linear-gradient(135deg, #57402f, #43301f); box-shadow: 0 16rpx 34rpx -22rpx rgba(45,30,18,.9); }
+.dark-entry > text { font-size: 40rpx; }
+.entry-title { font-size: 28rpx; font-weight: 600; }.entry-sub { margin-top: 5rpx; opacity: .7; font-size: 21rpx; }
+.bean-card { padding: 26rpx; }
+.bean-card, .addon-card { transition: transform .12s ease, opacity .12s ease; }
+.bean-card:active, .addon-card:active { opacity: .88; transform: scale(.992); }
+.bean-name-row { display: flex; align-items: baseline; gap: 14rpx; margin: 16rpx 0 6rpx; }
+.bean-name { flex: 0 1 auto; overflow: hidden; font-size: 36rpx; font-weight: 700; letter-spacing: 1rpx; white-space: nowrap; text-overflow: ellipsis; }
+.roast-chip { flex: none; padding: 5rpx 15rpx; border-radius: 12rpx; color: var(--brown); background: #f0e2c9; font-size: 20rpx; }
+.flavors { margin-top: 14rpx; }
+.flavors text { display: inline-block; margin: 0 10rpx 8rpx 0; padding: 7rpx 16rpx; border-radius: 14rpx; color: var(--brown-light); background: #f1e3cc; font-size: 20rpx; }
+.stock-line { margin-top: 10rpx; color: var(--sub); font-size: 22rpx; }
+.action-row { margin-top: 18rpx; }
+.action-right { display: flex; justify-content: flex-end; }
+.action-buttons { display: flex; flex: none; gap: 14rpx; }
+.bean-action { display: flex; flex: none; align-items: center; justify-content: center; min-width: 118rpx; height: 60rpx; padding: 0 24rpx; border: 2rpx solid rgba(90,65,48,.28); border-radius: 20rpx; color: var(--brown); background: rgba(238,226,204,.7); font-size: 23rpx; line-height: 1; }
+.bean-action.solid { border-color: var(--brown); color: #fbf5e8; background: linear-gradient(160deg, #6b4c37, var(--brown)); box-shadow: 0 8rpx 18rpx -12rpx rgba(60,40,22,.85); }
+.bean-action:active { opacity: .84; transform: scale(.97); }
+.archived { opacity: .76; }
+.warehouse-empty { margin-top: 28rpx; }
+.drink-entry { margin-top: 30rpx; }
+.addon-name { font-size: 30rpx; }
+.addon-card > .muted { margin-top: 7rpx; }
+.addon-stock { margin-top: 16rpx; }
+.addon-stock-line { color: var(--sub); font-size: 22rpx; }
+.restock { flex: none; padding: 10rpx 22rpx; border: 2rpx solid rgba(90,65,48,.28); border-radius: 20rpx; color: var(--brown); background: rgba(238,226,204,.7); font-size: 21rpx; }
+.restock:active { opacity: .84; }
+.nutrition-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12rpx; margin: 20rpx 0 14rpx; }
+.nutrition-row view { padding: 16rpx 6rpx; border: 2rpx solid var(--line-light); border-radius: 18rpx; background: var(--paper-light); text-align: center; }
+.nutrition-row text { display: block; }.nutrition-row text:first-child { font-size: 28rpx; font-weight: 600; }.nutrition-row text:last-child { margin-top: 4rpx; color: var(--dim); font-size: 18rpx; }
+.compact-empty { padding: 34rpx; }

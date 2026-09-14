@@ -1,0 +1,60 @@
+<view class="page" wx:if="{{bean}}">
+  <view class="card hero-card">
+    <view class="row-between"><text class="badge {{bean.statusTone}}">{{bean.statusLabel}}</text><text wx:if="{{bean.brandText}}" class="muted">{{bean.brandText}}</text></view>
+    <view class="bean-title-row"><text class="hand-title bean-title">{{bean.name}}</text><text wx:if="{{bean.roastText}}" class="roast-chip">{{bean.roastText}}</text></view>
+    <view wx:if="{{bean.metaText}}" class="subtext">{{bean.metaText}}</view>
+    <view wx:if="{{bean.flavors.length}}" class="flavors"><text wx:for="{{bean.flavors}}" wx:key="*this">{{item}}</text></view>
+    <view class="progress"><view class="progress-fill" style="width:{{bean.stockPercent}}%"></view></view>
+    <view class="row-between muted numeric"><text>余量 {{bean.stockG}}g / {{bean.initialText}}g</text><text>{{bean.forecastText}}</text></view>
+    <view class="hero-actions">
+      <view class="storage-switch">
+        <view class="storage-item {{bean.storageMode === '常温' ? 'active' : ''}}" data-mode="常温" bindtap="setStorage">常温</view>
+        <view class="storage-item {{bean.storageMode === '冷冻' ? 'active' : ''}}" data-mode="冷冻" bindtap="setStorage">冷冻</view>
+      </view>
+      <view class="stock-edit" bindtap="openStock">改余量</view>
+    </view>
+  </view>
+
+  <view class="eyebrow">豆子参数</view>
+  <view class="card detail-card">
+    <view class="kv"><text class="kv-label">价格 / 规格</text><text class="numeric">¥{{bean.price}} / {{bean.weightG}}g</text></view>
+    <view class="kv"><text class="kv-label">克价</text><text class="numeric">¥{{bean.unitPriceText}} / g</text></view>
+    <view class="kv"><text class="kv-label">默认单杯成本</text><text class="numeric">¥{{bean.cupCostText}}</text></view>
+  </view>
+
+  <view class="eyebrow">生命周期</view>
+  <view class="card timeline-card">
+    <view wx:for="{{timeline}}" wx:key="label" class="timeline-row">
+      <view class="timeline-dot {{item.done ? 'done' : ''}}"></view><text class="timeline-label">{{item.label}}</text><text class="muted numeric">{{item.date}}</text>
+    </view>
+    <view class="kv lifecycle-summary"><text class="kv-label">已开封</text><text class="numeric">{{bean.openedDaysText}}</text></view>
+    <view class="kv"><text class="kv-label">距烘焙</text><text class="numeric">{{bean.sinceRoastText}}</text></view>
+  </view>
+
+  <view class="eyebrow">我的评价</view>
+  <view class="card rating-card">
+    <view class="row-between"><text class="kv-label">五星评分</text><view><star-rating value="{{ratingDraft}}" size="40" bindchange="changeRating" /><text class="rating-text numeric">{{bean.ratingText}}</text></view></view>
+    <view class="note-label">主观评价</view><view class="note-text">{{bean.note || '未填写'}}</view>
+    <button class="secondary-button edit-note" bindtap="openNote">编辑评价</button>
+  </view>
+
+  <view class="eyebrow numeric">冲煮记录 · {{cupCount}} 杯 · ¥{{spentText}}</view>
+  <view wx:if="{{logs.length}}"><view wx:for="{{logs}}" wx:key="id" class="card brew-row" data-date="{{item.dateKey}}" bindtap="openDay"><view><text>{{item.categoryName}} · {{item.temperatureText}}</text><view class="muted numeric">{{item.dateKey}} · {{item.beanGrams}}g<text wx:if="{{item.addonName}}"> · {{item.addonName}} {{item.addonMl}}ml</text></view></view><view class="brew-tail"><text class="numeric">¥{{item.totalCostText}}</text><text>›</text></view></view></view>
+  <view wx:else class="empty">还没有记录</view>
+</view>
+
+<view wx:if="{{noteEditing}}" class="sheet-mask" bindtap="closeNote"><view class="sheet" catchtap="stopPropagation"><view class="sheet-grabber"></view><view class="sheet-title">主观评价</view><textarea class="textarea" value="{{noteDraft}}" bindinput="noteInput" maxlength="300" placeholder="酸质、甜感、余韵" placeholder-class="placeholder" /><button class="primary-button note-save" bindtap="saveNote">保 存</button></view></view>
+
+<view wx:if="{{stockEditing}}" class="sheet-mask" bindtap="closeStock">
+  <view class="sheet" catchtap="stopPropagation">
+    <view class="sheet-grabber"></view>
+    <view class="sheet-title">修改余量</view>
+    <view class="field">
+      <text class="field-label">当前余量（克）</text>
+      <input class="input numeric" type="digit" value="{{stockDraft}}" bindinput="onStockInput" />
+      <view class="muted stock-hint numeric">{{stockMaxText}}</view>
+    </view>
+    <button class="primary-button" bindtap="saveStock">保 存</button>
+    <button class="secondary-button stock-cancel" bindtap="closeStock">取消</button>
+  </view>
+</view>

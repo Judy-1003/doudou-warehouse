@@ -1,0 +1,12 @@
+<view class="rating" aria-label="评分 {{value}} 分">
+  <view wx:for="{{stars}}" wx:key="full" class="star" style="width:{{size}}rpx;height:{{size}}rpx;font-size:{{size}}rpx;line-height:{{size}}rpx">
+    <text class="star-empty">☆</text>
+    <view class="star-fill" style="width:{{item.percent}}%">
+      <text style="width:{{size}}rpx;font-size:{{size}}rpx;line-height:{{size}}rpx">★</text>
+    </view>
+    <block wx:if="{{!readonly}}">
+      <view class="hit left" data-value="{{item.half}}" bindtap="onPick"></view>
+      <view class="hit right" data-value="{{item.full}}" bindtap="onPick"></view>
+    </block>
+  </view>
+</view>

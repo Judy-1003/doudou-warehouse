@@ -1,0 +1,27 @@
+<view class="page">
+  <view class="eyebrow top-eyebrow">NEW DRINK</view>
+  <view class="hand-title form-title">添加饮品</view>
+
+  <view class="field"><text class="field-label">类别</text><view class="pills category-pills"><view class="pill {{type === 'milk' ? 'active' : ''}}" data-type="milk" bindtap="selectType">牛奶 / 奶类</view><view class="pill {{type === 'coconut' ? 'active' : ''}}" data-type="coconut" bindtap="selectType">椰子水</view><view class="pill {{type === 'custom' ? 'active' : ''}}" data-type="custom" bindtap="selectType">自定义</view></view></view>
+  <view wx:if="{{type === 'custom'}}" class="field custom-category"><text class="field-label">类别名称 *</text><input class="input" data-field="categoryName" value="{{form.categoryName}}" bindinput="onInput" placeholder="例如：气泡水、果汁" placeholder-class="placeholder" /></view>
+  <view class="field"><text class="field-label">{{type === 'custom' ? '物料名称' : '品牌'}} *</text><input class="input" data-field="brand" value="{{form.brand}}" bindinput="onInput" placeholder="{{type === 'custom' ? '例如：汤力水' : '例如：明治 醇壹'}}" placeholder-class="placeholder" /></view>
+  <view class="field-grid">
+    <view class="field"><text class="field-label">价格（元）*</text><input class="input numeric" type="digit" data-field="price" value="{{form.price}}" bindinput="onInput" placeholder="13.9" placeholder-class="placeholder" /></view>
+    <view class="field"><text class="field-label">容量（ml）*</text><input class="input numeric" type="digit" data-field="volumeMl" value="{{form.volumeMl}}" bindinput="onInput" placeholder="1000" placeholder-class="placeholder" /></view>
+  </view>
+
+  <view wx:if="{{type === 'custom'}}" class="field"><text class="field-label">默认单次用量（ml）*</text><input class="input numeric" type="digit" data-field="defaultMl" value="{{form.defaultMl}}" bindinput="onInput" /></view>
+
+  <block wx:if="{{type !== 'coconut'}}">
+    <view class="eyebrow">每 100ml 营养{{type === 'custom' ? '（选填）' : ''}}</view>
+    <view class="field-grid">
+      <view class="field"><text class="field-label">热量 kcal</text><input class="input numeric" type="digit" data-field="kcal" value="{{form.kcal}}" bindinput="onInput" /></view>
+      <view class="field"><text class="field-label">蛋白质 g</text><input class="input numeric" type="digit" data-field="protein" value="{{form.protein}}" bindinput="onInput" /></view>
+      <view class="field"><text class="field-label">脂肪 g</text><input class="input numeric" type="digit" data-field="fat" value="{{form.fat}}" bindinput="onInput" /></view>
+      <view class="field"><text class="field-label">糖 g</text><input class="input numeric" type="digit" data-field="sugar" value="{{form.sugar}}" bindinput="onInput" /></view>
+    </view>
+  </block>
+  <view wx:else class="field"><text class="field-label">每 100ml 含糖量（g）</text><input class="input numeric" type="digit" data-field="sugar" value="{{form.sugar}}" bindinput="onInput" /></view>
+
+  <button class="primary-button save-button" bindtap="saveDrink">加 入 饮 品 架</button>
+</view>

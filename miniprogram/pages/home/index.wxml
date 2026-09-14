@@ -1,0 +1,157 @@
+<view class="page">
+  <view class="hero-shell">
+    <view class="hero-wash"></view>
+    <view class="hero">
+      <view class="hero-copy">
+        <view class="eyebrow hero-eyebrow">TODAY</view>
+        <view class="hand-title hero-title">今天喝什么</view>
+        <view class="hero-date numeric">{{dateLabel}}</view>
+      </view>
+      <view class="hero-mascot">
+        <coffee-mascot />
+      </view>
+    </view>
+  </view>
+
+  <view class="drink-picker">
+    <view class="picker-title">咖啡品类</view>
+    <view class="pills drink-pills">
+      <view wx:for="{{mainCategories}}" wx:key="id" class="pill drink-pill {{draft.categoryId === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="selectCategory">{{item.name}}</view>
+      <view wx:if="{{moreCategories.length}}" class="pill drink-pill more-pill {{moreActive ? 'active' : ''}}" data-sheet="more" bindtap="openSheet">其他</view>
+    </view>
+    <view class="picker-divider"></view>
+    <view class="picker-title temperature-title">饮用温度</view>
+    <view class="temperature-pills">
+      <view wx:for="{{temperatureOptions}}" wx:key="value" class="temperature-pill {{draft.temperature === item.value ? 'active' : ''}}" data-value="{{item.value}}" bindtap="selectTemperature">{{item.label}}</view>
+    </view>
+  </view>
+
+  <view class="row-between section-head">
+    <view class="eyebrow">咖啡豆</view>
+    <view class="muted">豆仓现存 {{availableBeans.length}} 包</view>
+  </view>
+  <scroll-view wx:if="{{availableBeans.length}}" class="bean-pills" scroll-x enhanced show-scrollbar="false">
+    <view wx:for="{{availableBeans}}" wx:key="id" class="bean-pill {{draft.beanId === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="selectBean">
+      <view class="bean-pill-name">{{item.shortName}}</view>
+      <view class="bean-pill-stock numeric">余量 {{item.stockG}} / {{item.initialText}} 克</view>
+      <view class="mini-progress"><view class="mini-progress-fill" style="{{item.stockStyle}}"></view></view>
+    </view>
+  </scroll-view>
+  <view wx:else class="empty">
+    <view>豆仓里还没有咖啡豆</view>
+    <navigator url="/pages/bean-form/index" class="empty-action">登记入库</navigator>
+  </view>
+
+  <block wx:if="{{activeCategory && activeCategory.addonType !== 'none'}}">
+    <view class="row-between section-head">
+      <view class="eyebrow">{{activeAddonTitle}}</view>
+      <view class="muted numeric">{{addonUsageText}}</view>
+    </view>
+    <scroll-view wx:if="{{visibleAddons.length}}" class="pills" scroll-x enhanced show-scrollbar="false">
+      <view wx:for="{{visibleAddons}}" wx:key="id" class="pill {{item.selected ? 'active' : ''}}" data-id="{{item.id}}" bindtap="selectAddon">{{item.brand}}</view>
+    </scroll-view>
+    <view wx:else class="empty compact-empty">
+      <view>饮品架里还没有{{activeAddonName}}</view>
+      <navigator url="/pages/drink-form/index?type={{activeCategory.addonType}}" class="empty-action">添加饮品</navigator>
+    </view>
+  </block>
+
+  <view wx:if="{{calculation}}" class="card cup-card">
+    <view class="row-between cup-head">
+      <view class="cup-title">{{activeCategory.name}} · {{activeTemperatureText}}</view>
+      <view class="cup-price numeric">¥{{calculation.totalCostText}}</view>
+    </view>
+    <view class="cost-lines">
+      <view class="cost-line bean-line">
+        <view class="cost-label">咖啡豆</view>
+        <view class="gram-editor">
+          <view class="gram-button" data-step="-0.5" bindtap="adjustBeanGrams">−</view>
+          <input class="gram-input numeric" type="digit" value="{{beanGramsInput}}" bindinput="onBeanGramsInput" bindblur="commitBeanGrams" bindconfirm="commitBeanGrams" />
+          <text class="gram-unit">g</text>
+          <view class="gram-button" data-step="0.5" bindtap="adjustBeanGrams">＋</view>
+        </view>
+        <text class="cost-value numeric">¥{{calculation.beanCostText}}</text>
+      </view>
+      <view wx:if="{{calculation.addonName}}" class="cost-line numeric"><text>{{calculation.addonName}} {{draft.addonMl}}ml</text><text>¥{{calculation.addonCostText}}</text></view>
+      <view wx:if="{{beanGramsCustom}}" class="gram-reset" bindtap="resetBeanGrams">恢复默认 {{state.settings.defaultBeanGrams}}g</view>
+    </view>
+    <button class="primary-button complete-button" bindtap="startRating">完 成</button>
+  </view>
+
+  <block wx:if="{{todayCount}}">
+    <view class="eyebrow">今日合计</view>
+    <view class="summary-card">
+      <view class="row-between summary-top"><text>{{todayCount}} 杯</text><text class="numeric">¥{{todaySummary.totalCostText}}</text></view>
+      <view class="nutrition-grid summary-grid">
+        <view><text class="numeric">{{todaySummary.caffeineText}}</text><text>咖啡因 mg</text></view>
+        <view><text class="numeric">{{todaySummary.proteinText}}</text><text>蛋白质 g</text></view>
+        <view><text class="numeric">{{todaySummary.fatText}}</text><text>脂肪 g</text></view>
+        <view><text class="numeric">{{todaySummary.sugarText}}</text><text>糖 g</text></view>
+      </view>
+    </view>
+  </block>
+
+  <view class="row-between section-head">
+    <view class="eyebrow">今天喝了</view>
+    <view wx:if="{{todayLogs.length}}" class="muted day-link" data-key="{{todayKey}}" bindtap="tapCalendarDay">查看 / 修改 ›</view>
+  </view>
+  <view wx:if="{{todayLogs.length}}">
+    <view wx:for="{{todayLogs}}" wx:key="id" class="log-swipe {{swipeLogId === item.id ? 'open' : ''}}">
+      <view class="log-delete" data-id="{{item.id}}" bindtap="deleteLog">删除</view>
+      <view class="card log-card" data-id="{{item.id}}" bindtouchstart="onLogTouchStart" bindtouchmove="onLogTouchMove" bindtouchend="onLogTouchEnd" bindtouchcancel="onLogTouchEnd">
+        <image wx:if="{{item.photoPath}}" class="log-photo" src="{{item.photoPath}}" mode="aspectFill" />
+        <view wx:else class="coffee-circle {{item.addonType}}"></view>
+        <view class="log-copy">
+          <view class="row-between"><text>{{item.categoryName}} · {{item.temperatureText}}</text><text class="numeric">¥{{item.costText}}</text></view>
+          <view class="muted numeric">{{item.beanName}} · {{item.beanGrams}}g<text wx:if="{{item.addonName}}"> · {{item.addonName}} {{item.addonMl}}ml</text></view>
+          <view class="muted numeric">{{item.time}} · {{item.rating || '未评分'}}{{item.rating ? ' 分' : ''}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty compact-empty">还没有记录</view>
+
+  <view class="eyebrow">咖啡日历</view>
+  <view class="card calendar-card" bindtouchstart="onCalendarTouchStart" bindtouchend="onCalendarTouchEnd">
+    <view class="calendar-header">
+      <view class="calendar-arrow" data-step="-1" bindtap="shiftMonth">‹</view>
+      <view class="numeric calendar-title">{{calendarLabel}}</view>
+      <view class="calendar-arrow {{canNextMonth ? '' : 'disabled'}}" data-step="1" bindtap="shiftMonth">›</view>
+    </view>
+    <view class="calendar-grid weekday-grid">
+      <text wx:for="{{weekdays}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="calendar-grid">
+      <view wx:for="{{calendarDays}}" wx:key="key" class="calendar-day {{item.blank ? 'blank' : ''}} {{item.isToday ? 'today' : ''}} {{item.isFuture ? 'future' : ''}} {{item.hasPhoto ? 'has-photo' : ''}}" data-key="{{item.key}}" bindtap="tapCalendarDay">
+        <image wx:if="{{item.hasPhoto}}" src="{{item.photoPath}}" mode="aspectFill" />
+        <text wx:if="{{!item.blank}}" class="day-number">{{item.day}}</text>
+        <view wx:if="{{item.hasLog && !item.hasPhoto}}" class="calendar-dot"></view>
+        <view wx:if="{{item.count > 1}}" class="calendar-count">{{item.count}}</view>
+      </view>
+    </view>
+    <view class="calendar-foot"><text class="numeric">{{calendarSummary}}</text></view>
+  </view>
+</view>
+
+<view wx:if="{{sheet}}" class="sheet-mask" bindtap="closeSheet">
+  <view class="sheet" catchtap="stopPropagation">
+    <view class="sheet-grabber"></view>
+    <block wx:if="{{sheet === 'more'}}">
+      <view class="sheet-title">其他咖啡品类</view>
+      <view wx:for="{{moreCategories}}" wx:key="id" class="sheet-row" data-id="{{item.id}}" bindtap="selectCategory">
+        <text>{{item.name}}</text><text class="muted">{{item.addonType === 'milk' ? '牛奶' : item.addonType === 'coconut' ? '椰子水' : item.addonType === 'custom' ? item.addonCategoryName : '不加辅料'}}</text>
+      </view>
+    </block>
+    <block wx:elif="{{sheet === 'rating'}}">
+      <view class="rating-mascot"><coffee-mascot compact /></view>
+      <view class="sheet-title">打分</view>
+      <view class="rating-wrap"><star-rating value="{{rating}}" size="62" bindchange="changeRating" /><view class="rating-number numeric">{{rating ? rating + ' 分' : '未评分'}}</view></view>
+      <view class="photo-picker" bindtap="choosePhoto">
+        <image wx:if="{{photoPath}}" src="{{photoPath}}" mode="aspectFill" />
+        <view wx:else>＋ 添加照片</view>
+      </view>
+      <button class="primary-button" bindtap="saveCup">保 存</button>
+      <button class="secondary-button sheet-secondary" bindtap="closeSheet">取消</button>
+    </block>
+  </view>
+</view>

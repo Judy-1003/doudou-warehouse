@@ -1,0 +1,38 @@
+<view class="page form-page">
+  <view class="eyebrow top-eyebrow">NEW BEAN</view>
+  <view class="hand-title form-title">登记入库</view>
+
+  <view class="field"><text class="field-label">豆子名称 *</text><input class="input" data-field="name" value="{{form.name}}" bindinput="onInput" placeholder="例如：埃塞俄比亚 · 古吉" placeholder-class="placeholder" /></view>
+  <view class="field"><text class="field-label">烘焙商 / 品牌</text><input class="input" data-field="brand" value="{{form.brand}}" bindinput="onInput" placeholder="例如：Coffee Trip Roasters" placeholder-class="placeholder" /></view>
+  <view class="field-grid">
+    <view class="field"><text class="field-label">豆种</text><picker mode="selector" range="{{speciesOptions}}" value="{{speciesIndex}}" bindchange="onSpecies"><view class="picker-field">{{speciesOptions[speciesIndex]}}</view></picker></view>
+    <view class="field"><text class="field-label">烘焙度</text><picker mode="selector" range="{{roastOptions}}" value="{{roastIndex}}" bindchange="onRoast"><view class="picker-field">{{roastOptions[roastIndex]}}</view></picker></view>
+  </view>
+  <view class="field-grid">
+    <view class="field"><text class="field-label">产地</text><input class="input" data-field="origin" value="{{form.origin}}" bindinput="onInput" placeholder="例如：埃塞俄比亚" placeholder-class="placeholder" /></view>
+    <view class="field"><text class="field-label">处理法</text><input class="input" data-field="process" value="{{form.process}}" bindinput="onInput" placeholder="例如：水洗" placeholder-class="placeholder" /></view>
+  </view>
+  <view class="field"><text class="field-label">风味（逗号分隔）</text><input class="input" data-field="flavors" value="{{form.flavors}}" bindinput="onInput" placeholder="蓝莓，花蜜，桃子" placeholder-class="placeholder" /></view>
+
+  <view class="eyebrow">价格与规格</view>
+  <view class="field-grid">
+    <view class="field"><text class="field-label">价格（元）*</text><input class="input numeric" type="digit" data-field="price" value="{{form.price}}" bindinput="onInput" placeholder="98" placeholder-class="placeholder" /></view>
+    <view class="field"><text class="field-label">规格（克）*</text><input class="input numeric" type="digit" data-field="weightG" value="{{form.weightG}}" bindinput="onInput" placeholder="227" placeholder-class="placeholder" /></view>
+  </view>
+  <view class="field"><text class="field-label">当前余量（克）</text><input class="input numeric" type="digit" data-field="stockG" value="{{form.stockG}}" bindinput="onInput" placeholder="留空按规格计算，进度条以此为满量" placeholder-class="placeholder" /></view>
+
+  <view class="eyebrow">日期与赏味期</view>
+  <view class="field-grid">
+    <view class="field"><text class="field-label">烘焙日期</text><picker mode="date" value="{{form.roastedAt}}" data-field="roastedAt" bindchange="onDate"><view class="picker-field numeric">{{form.roastedAt}}</view></picker></view>
+    <view class="field"><text class="field-label">配送到手</text><picker mode="date" value="{{form.deliveredAt}}" data-field="deliveredAt" bindchange="onDate"><view class="picker-field numeric">{{form.deliveredAt}}</view></picker></view>
+  </view>
+  <view class="field-grid">
+    <view class="field"><text class="field-label">养豆天数</text><input class="input numeric" type="number" data-field="restDays" value="{{form.restDays}}" bindinput="onInput" /></view>
+    <view class="field"><text class="field-label">赏味天数</text><input class="input numeric" type="number" data-field="bestDays" value="{{form.bestDays}}" bindinput="onInput" /></view>
+  </view>
+
+  <view class="field"><text class="field-label">入库状态</text><view class="pills"><view class="pill {{form.state === 'sealed' ? 'active' : ''}}" data-value="sealed" bindtap="selectState">未启封</view><view class="pill {{form.state === 'open' ? 'active' : ''}}" data-value="open" bindtap="selectState">已开封</view></view></view>
+  <view class="field"><text class="field-label">保存方式</text><view class="pills"><view class="pill {{form.storageMode === '常温' ? 'active' : ''}}" data-value="常温" bindtap="selectStorage">常温</view><view class="pill {{form.storageMode === '冷冻' ? 'active' : ''}}" data-value="冷冻" bindtap="selectStorage">冷冻</view></view></view>
+
+  <button class="primary-button save-button" bindtap="saveBean">加 入 豆 仓</button>
+</view>

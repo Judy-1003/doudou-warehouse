@@ -1,0 +1,12 @@
+.settings-hero { display: flex; align-items: flex-end; justify-content: space-between; height: 176rpx; margin-bottom: 18rpx; }
+.top-eyebrow { margin-top: 8rpx; }
+.settings-row { display: flex; align-items: center; gap: 22rpx; min-height: 126rpx; margin-bottom: 20rpx; padding: 22rpx 26rpx; border: 2rpx solid var(--line); border-radius: 28rpx; background: var(--card); box-shadow: 0 12rpx 26rpx -24rpx rgba(77,52,32,.7); transition: opacity .12s ease, transform .12s ease; }
+.settings-row:active { opacity: .9; transform: scale(.993); }
+.settings-icon { display: flex; flex: none; align-items: center; justify-content: center; width: 68rpx; height: 68rpx; border: 2rpx solid rgba(90,65,48,.2); border-radius: 22rpx; color: var(--brown); background: linear-gradient(150deg, rgba(246,238,221,.95), rgba(235,222,199,.85)); font-size: 31rpx; }
+.settings-copy { display: flex; flex: 1; flex-direction: column; min-width: 0; gap: 5rpx; }
+.settings-copy text:first-child { font-size: 29rpx; }
+.settings-copy text:last-child { overflow: hidden; color: var(--dim); font-size: 22rpx; white-space: nowrap; text-overflow: ellipsis; }
+.arrow { color: var(--dim); font-size: 40rpx; }
+.danger-row { margin-top: 34rpx; border-color: rgba(176,85,60,.42); background: rgba(243,222,214,.5); }
+.danger-row .settings-copy text:first-child { color: var(--red); }
+.danger-icon { border-color: rgba(176,85,60,.32); color: var(--red); background: rgba(255,251,246,.8); }

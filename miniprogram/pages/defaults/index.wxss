@@ -1,0 +1,1 @@
+.top-eyebrow { margin-top: 8rpx; }.defaults-title { margin-bottom: 28rpx; }.defaults-card { padding: 8rpx 28rpx; }.edit { margin-left: 20rpx; color: var(--brown); font-size: 23rpx; }.coefficient { margin: 0 6rpx; }.unit { margin-top: 10rpx; }.cancel-button { margin-top: 16rpx; }

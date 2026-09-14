@@ -1,0 +1,12 @@
+<view class="page">
+  <view class="eyebrow top-eyebrow">MY BEANS</view>
+  <view class="hand-title">豆子清单</view>
+  <view class="subtitle numeric list-summary">{{countText}}</view>
+  <view wx:if="{{beans.length}}" class="card list-card">
+    <view wx:for="{{beans}}" wx:key="id" class="bean-row" data-id="{{item.id}}" bindtap="openBean" bindlongpress="deleteBean">
+      <view class="bean-copy"><text>{{item.name}}</text><text class="muted numeric">{{item.subText}}</text></view>
+      <view class="row-tail"><text class="numeric">{{item.ratingText}}</text><text>›</text></view>
+    </view>
+  </view>
+  <view wx:else class="empty">还没有咖啡记录</view>
+</view>

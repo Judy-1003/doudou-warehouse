@@ -1,0 +1,23 @@
+.top-eyebrow { margin-top: 8rpx; }
+.page-heading { align-items: flex-end; margin-bottom: 30rpx; }
+.heading-copy { flex: 1; min-width: 0; }
+.add-button { flex: none; margin-bottom: 4rpx; }
+.category-list { padding-bottom: 12rpx; }
+.category-card { position: relative; padding: 24rpx; transition: transform .16s ease, opacity .16s ease, box-shadow .16s ease; }
+.category-card.dragging { z-index: 2; opacity: .84; transform: scale(.985); box-shadow: 0 14rpx 34rpx -20rpx rgba(77,52,32,.7); }
+.category-main { display: flex; align-items: center; gap: 18rpx; min-width: 0; }
+.position { display: flex; flex: none; align-items: center; justify-content: center; width: 52rpx; height: 52rpx; border: 2rpx solid var(--line-light); border-radius: 16rpx; color: var(--brown); background: var(--paper-light); font-weight: 600; }
+.category-copy { flex: 1; min-width: 0; }
+.category-name { overflow: hidden; font-size: 31rpx; font-weight: 600; line-height: 1.35; white-space: nowrap; text-overflow: ellipsis; }
+.category-meta { display: flex; gap: 12rpx; align-items: center; margin-top: 7rpx; color: var(--dim); font-size: 21rpx; }
+.category-meta text:first-child { padding-right: 12rpx; border-right: 2rpx solid var(--line-light); }
+.drag-handle { display: flex; flex: none; align-items: center; justify-content: center; width: 64rpx; height: 64rpx; border: 2rpx solid var(--line); border-radius: 18rpx; color: var(--dim); background: var(--paper-light); touch-action: none; }
+.drag-dot-grid { display: grid; grid-template-columns: repeat(2, 8rpx); grid-template-rows: repeat(3, 8rpx); gap: 4rpx 7rpx; align-items: center; justify-items: center; width: 24rpx; height: 32rpx; }
+.drag-dot-grid text { height: 8rpx; font-size: 18rpx; line-height: 8rpx; }
+.category-foot { display: flex; align-items: center; justify-content: space-between; gap: 18rpx; margin-top: 20rpx; padding-top: 18rpx; border-top: 2rpx dashed var(--line-light); }
+.visibility-label { display: inline-flex; align-items: center; min-height: 42rpx; padding: 0 15rpx; border-radius: 13rpx; color: var(--dim); background: #ece3d2; font-size: 20rpx; }
+.visibility-label.visible { color: var(--green); background: var(--green-bg); }
+.more-actions { display: flex; flex: none; gap: 18rpx; color: var(--brown); font-size: 22rpx; }
+.more-actions .delete { color: var(--red); }
+.editor-pills { flex-wrap: wrap; }
+.cancel-button { margin-top: 16rpx; }

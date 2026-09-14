@@ -1,0 +1,41 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/warehouse/index",
+    "pages/settings/index",
+    "pages/bean-form/index",
+    "pages/drink-form/index",
+    "pages/categories/index",
+    "pages/defaults/index",
+    "pages/bean-list/index",
+    "pages/bean-detail/index",
+    "pages/day-logs/index",
+    "pages/statistics/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#efe4cf",
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "豆豆小仓库",
+    "backgroundColor": "#efe4cf",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#a79079",
+    "selectedColor": "#5a4130",
+    "backgroundColor": "#f6eedd",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/home/index", "text": "首页" },
+      { "pagePath": "pages/warehouse/index", "text": "仓库" },
+      { "pagePath": "pages/settings/index", "text": "个人设置" }
+    ]
+  },
+  "usingComponents": {
+    "coffee-mascot": "/components/coffee-mascot/index",
+    "star-rating": "/components/star-rating/index"
+  },
+  "__usePrivacyCheck__": true,
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

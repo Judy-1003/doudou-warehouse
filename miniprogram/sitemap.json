@@ -1,0 +1,4 @@
+{
+  "desc": "豆豆小仓库页面索引",
+  "rules": [{ "action": "allow", "page": "*" }]
+}

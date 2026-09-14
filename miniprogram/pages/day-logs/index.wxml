@@ -1,0 +1,72 @@
+<view class="page">
+  <view class="eyebrow top-eyebrow">DAY RECORDS</view>
+  <view class="hand-title day-title">{{dateLabel}}</view>
+  <view wx:if="{{summaryText}}" class="subtitle numeric day-summary">{{summaryText}}</view>
+
+  <view wx:if="{{logs.length}}">
+    <view wx:for="{{logs}}" wx:key="id" class="log-swipe {{swipeLogId === item.id ? 'open' : ''}}">
+      <view class="log-actions">
+        <view class="log-action edit" data-id="{{item.id}}" bindtap="openEdit">修改</view>
+        <view class="log-action delete" data-id="{{item.id}}" bindtap="deleteLog">删除</view>
+      </view>
+      <view class="card log-card" data-id="{{item.id}}" bindtouchstart="onLogTouchStart" bindtouchmove="onLogTouchMove" bindtouchend="onLogTouchEnd" bindtouchcancel="onLogTouchEnd">
+        <image wx:if="{{item.photoPath}}" class="log-photo" src="{{item.photoPath}}" mode="aspectFill" />
+        <view wx:else class="coffee-circle {{item.addonType}}"></view>
+        <view class="log-copy">
+          <view class="row-between"><text>{{item.categoryName}} · {{item.temperatureText}}</text><text class="numeric">¥{{item.costText}}</text></view>
+          <view class="muted numeric">{{item.beanName}} · {{item.beanGrams}}g<text wx:if="{{item.addonName}}"> · {{item.addonName}} {{item.addonMl}}ml</text></view>
+          <view class="muted numeric">{{item.timeText}} · {{item.rating || '未评分'}}{{item.rating ? ' 分' : ''}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="muted swipe-hint">左滑记录可修改或删除</view>
+  </view>
+  <view wx:else class="empty">这一天没有咖啡记录</view>
+</view>
+
+<view wx:if="{{editing}}" class="sheet-mask" bindtap="closeEdit">
+  <view class="sheet" catchtap="stopPropagation">
+    <view class="sheet-grabber"></view>
+    <view class="sheet-title">修改这一杯</view>
+
+    <view class="field">
+      <text class="field-label">咖啡品类</text>
+      <view class="pills wrap-pills">
+        <view wx:for="{{categories}}" wx:key="id" class="pill {{editCategoryId === item.id ? 'active' : ''}}" data-id="{{item.id}}" bindtap="selectEditCategory">{{item.name}}</view>
+      </view>
+    </view>
+
+    <view class="field">
+      <text class="field-label">饮用温度</text>
+      <view class="pills">
+        <view wx:for="{{temperatureOptions}}" wx:key="value" class="pill {{editTemperature === item.value ? 'active' : ''}}" data-value="{{item.value}}" bindtap="selectEditTemperature">{{item.label}}</view>
+      </view>
+    </view>
+
+    <view class="field">
+      <text class="field-label">咖啡豆用量（克）</text>
+      <input class="input numeric" type="digit" value="{{editBeanGrams}}" bindinput="onEditGrams" />
+    </view>
+
+    <block wx:if="{{editAddons.length}}">
+      <view class="field">
+        <text class="field-label">{{editAddonLabel}}</text>
+        <view class="pills wrap-pills">
+          <view wx:for="{{editAddons}}" wx:key="id" class="pill {{item.selected ? 'active' : ''}}" data-id="{{item.id}}" bindtap="selectEditAddon">{{item.brand}}</view>
+        </view>
+      </view>
+      <view class="field">
+        <text class="field-label">{{editAddonLabel}}用量（毫升）</text>
+        <input class="input numeric" type="number" value="{{editAddonMl}}" bindinput="onEditAddonMl" />
+      </view>
+    </block>
+
+    <view class="field">
+      <text class="field-label">评分</text>
+      <view class="edit-rating"><star-rating value="{{editRating}}" size="52" bindchange="changeEditRating" /><text class="numeric rating-text">{{editRating ? editRating + ' 分' : '未评分'}}</text></view>
+    </view>
+
+    <button class="primary-button" bindtap="saveEdit">保 存</button>
+    <button class="secondary-button cancel-button" bindtap="closeEdit">取消</button>
+  </view>
+</view>

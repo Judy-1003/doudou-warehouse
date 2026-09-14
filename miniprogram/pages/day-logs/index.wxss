@@ -1,0 +1,20 @@
+.top-eyebrow { margin-top: 8rpx; }
+.day-title { font-size: 44rpx; }
+.day-summary { margin-bottom: 26rpx; }
+.log-swipe { position: relative; margin-bottom: 20rpx; overflow: hidden; border-radius: 28rpx; }
+.log-actions { position: absolute; top: 0; right: 0; bottom: 0; display: flex; }
+.log-action { display: flex; align-items: center; justify-content: center; width: 150rpx; color: #fbf5e8; font-size: 26rpx; }
+.log-action.edit { background: linear-gradient(160deg, #8a6647, var(--brown-light)); }
+.log-action.delete { background: linear-gradient(160deg, #bb5f45, var(--red)); }
+.log-card { position: relative; display: flex; gap: 22rpx; align-items: center; margin-bottom: 0; padding: 22rpx; background: #fcf7ec; transition: transform .22s ease; }
+.log-swipe.open .log-card { transform: translateX(-300rpx); }
+.log-photo, .coffee-circle { flex: none; width: 92rpx; height: 92rpx; border-radius: 22rpx; }
+.coffee-circle { background: radial-gradient(circle, #f1e1c6 0 32%, #c79e70 33% 42%, #5c4230 43% 52%, #3c2a1d 53%); }
+.coffee-circle.none { background: radial-gradient(circle, #312217 0 43%, #5c4230 44% 52%, #2a1d14 53%); }
+.coffee-circle.coconut { background: radial-gradient(circle, #e8ebdc 0 34%, #bfc7a8 35% 43%, #5c4230 44% 52%, #3c2a1d 53%); }
+.log-copy { flex: 1; min-width: 0; }
+.swipe-hint { padding: 8rpx 0 4rpx; text-align: center; }
+.wrap-pills { flex-wrap: wrap; white-space: normal; }
+.edit-rating { display: flex; align-items: center; gap: 16rpx; }
+.rating-text { color: var(--sub); font-size: 23rpx; }
+.cancel-button { margin-top: 16rpx; }

@@ -1,0 +1,21 @@
+<view class="page">
+  <view class="settings-hero">
+    <view><view class="eyebrow top-eyebrow">SETTINGS</view><view class="hand-title">个人设置</view></view>
+    <coffee-mascot compact />
+  </view>
+  <navigator url="/pages/categories/index" class="settings-row">
+    <view class="settings-icon">☕</view><view class="settings-copy"><text>咖啡品类</text><text>{{categorySummary}}</text></view><text class="arrow">›</text>
+  </navigator>
+  <navigator url="/pages/defaults/index" class="settings-row">
+    <view class="settings-icon">◌</view><view class="settings-copy"><text>默认消耗量</text><text class="numeric">{{defaultSummary}}</text></view><text class="arrow">›</text>
+  </navigator>
+  <navigator url="/pages/bean-list/index" class="settings-row">
+    <view class="settings-icon">◒</view><view class="settings-copy"><text>豆子清单</text><text class="numeric">{{beanSummary}}</text></view><text class="arrow">›</text>
+  </navigator>
+  <navigator url="/pages/statistics/index" class="settings-row">
+    <view class="settings-icon">▥</view><view class="settings-copy"><text>数据统计</text><text class="numeric">{{statsSummary}}</text></view><text class="arrow">›</text>
+  </navigator>
+  <view class="settings-row danger-row" bindtap="openReset">
+    <view class="settings-icon danger-icon">⟲</view><view class="settings-copy"><text>初始化数据</text><text class="numeric">{{resetSummary}}</text></view><text class="arrow">›</text>
+  </view>
+</view>

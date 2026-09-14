@@ -1,0 +1,12 @@
+{
+  "name": "doudou-warehouse",
+  "version": "1.0.0",
+  "private": true,
+  "description": "豆豆小仓库微信小程序",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "5.9.2"
+  }
+}

@@ -1,0 +1,19 @@
+<view class="page">
+  <view class="eyebrow top-eyebrow">DEFAULTS</view>
+  <view class="hand-title defaults-title">默认消耗量</view>
+  <view class="card defaults-card">
+    <view class="kv"><text class="kv-label">豆子 · 每次扣除</text><view><text class="numeric">{{settings.defaultBeanGrams}} g</text><text class="edit" data-key="defaultBeanGrams" bindtap="openEdit">修改</text></view></view>
+    <view class="kv"><text class="kv-label">牛奶 · 每次用量</text><view><text class="numeric">{{settings.defaultMilkMl}} ml</text><text class="edit" data-key="defaultMilkMl" bindtap="openEdit">修改</text></view></view>
+    <view class="kv"><text class="kv-label">椰子水 · 每次用量</text><view><text class="numeric">{{settings.defaultCoconutMl}} ml</text><text class="edit" data-key="defaultCoconutMl" bindtap="openEdit">修改</text></view></view>
+  </view>
+  <view class="muted coefficient">咖啡因估算：阿拉比卡系 11mg/g · 罗布斯塔 20mg/g · 利比里卡 13mg/g · 尤金诺伊德 6mg/g · 拼配 14mg/g</view>
+</view>
+
+<view wx:if="{{editing}}" class="sheet-mask" bindtap="closeEdit">
+  <view class="sheet" catchtap="stopPropagation">
+    <view class="sheet-grabber"></view><view class="sheet-title">{{editingTitle}}</view>
+    <view class="field"><input class="input numeric" type="digit" value="{{editingValue}}" bindinput="onValue" /><view class="muted unit">单位：{{editingUnit}}</view></view>
+    <button class="primary-button" bindtap="saveValue">保 存</button>
+    <button class="secondary-button cancel-button" bindtap="closeEdit">取消</button>
+  </view>
+</view>

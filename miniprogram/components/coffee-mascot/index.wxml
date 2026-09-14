@@ -1,0 +1,16 @@
+<view class="mascot {{compact ? 'compact' : ''}}" aria-label="咖啡豆吉祥物">
+  <view class="spark spark-left">✦</view>
+  <view class="spark spark-right">✦</view>
+  <view class="bean">
+    <view class="bean-line"></view>
+    <view class="eye eye-left"></view>
+    <view class="eye eye-right"></view>
+    <view class="blush blush-left"></view>
+    <view class="blush blush-right"></view>
+    <view class="smile"></view>
+  </view>
+  <view class="arm arm-left"></view>
+  <view class="arm arm-right"></view>
+  <view class="leg leg-left"></view>
+  <view class="leg leg-right"></view>
+</view>

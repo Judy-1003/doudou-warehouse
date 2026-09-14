@@ -1,0 +1,33 @@
+<view class="page" wx:if="{{stats}}">
+  <view class="eyebrow top-eyebrow">STATISTICS</view><view class="hand-title stats-title">数据统计</view>
+  <view class="range-segment"><view class="range-item {{range === 'week' ? 'active' : ''}}" data-range="week" bindtap="selectRange">本周</view><view class="range-item {{range === 'month' ? 'active' : ''}}" data-range="month" bindtap="selectRange">本月</view><view class="range-item {{range === 'year' ? 'active' : ''}}" data-range="year" bindtap="selectRange">本年</view></view>
+  <view class="receipt">
+    <view class="receipt-label">{{rangeTitle}} · {{rangeNote}}</view>
+    <view class="receipt-cups numeric">{{stats.cups}}<text>杯</text></view>
+    <view class="receipt-sub numeric">豆子 {{stats.beanGramsText}}g · 约 {{stats.bagsText}} 包 227g</view>
+    <view class="stamp"><text class="numeric">¥{{stats.totalCostText}}</text><text>SPENT</text></view>
+  </view>
+  <view class="metric-grid">
+    <view><text class="metric-icon">◒</text><text class="metric-value numeric">{{stats.beanGramsText}}<text class="metric-unit">g</text></text><text class="metric-label">豆子</text></view>
+    <view><text class="metric-icon">◌</text><text class="metric-value numeric">{{stats.milkText}}</text><text class="metric-label">牛奶</text></view>
+    <view><text class="metric-icon">◡</text><text class="metric-value numeric">{{stats.dailyText}}<text class="metric-unit">g</text></text><text class="metric-label">日均</text></view>
+  </view>
+  <view class="eyebrow">每日明细</view>
+  <view wx:if="{{days.length}}" class="card day-list">
+    <view wx:for="{{days}}" wx:key="key" class="day-row" data-key="{{item.key}}" bindtap="openDay">
+      <view class="day-copy">
+        <text class="numeric">{{item.dateText}} · {{item.cups}} 杯</text>
+        <text class="muted">{{item.categoryText}}</text>
+      </view>
+      <view class="day-tail"><text class="numeric">¥{{item.costText}}</text><text>›</text></view>
+    </view>
+  </view>
+  <view wx:else class="empty compact-empty">这个区间还没有记录</view>
+
+  <view class="eyebrow">累计</view>
+  <view class="totals-grid">
+    <view><text>咖啡豆消耗量</text><text class="numeric">{{all.beanText}}</text></view>
+    <view><text>咖啡豆花费</text><text class="numeric">¥{{all.beanCostText}}</text></view>
+    <view class="wide"><text>牛奶花费</text><text class="numeric">¥{{all.milkCostText}}<text class="total-unit">共 {{all.milkText}}</text></text></view>
+  </view>
+</view>

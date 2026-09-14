@@ -1,0 +1,47 @@
+{
+  "description": "豆豆小仓库微信小程序",
+  "appid": "wx49d0df352b613abf",
+  "compileType": "miniprogram",
+  "libVersion": "3.7.12",
+  "miniprogramRoot": "miniprogram/",
+  "projectname": "doudou-warehouse",
+  "condition": {},
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "useCompilerPlugins": [
+      "typescript"
+    ],
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "compileHotReLoad": true,
+    "urlCheck": true,
+    "checkSiteMap": true,
+    "coverView": true,
+    "lazyloadPlaceholderEnable": false,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "condition": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    }
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "simulatorPluginLibVersion": {}
+}
