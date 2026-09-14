@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>豆豆小仓库 · 咖啡记账小程序</title>
+<style>
+:root{
+  --paper:#efe4cf; --paper-light:#f6eedd; --card:#fcf7ec; --line:#dfd0b2; --line-light:#eadcc2;
+  --ink:#3e2e21; --sub:#7b6650; --dim:#a79079; --brown:#5a4130; --brown-light:#7a5a40;
+  --green:#6f8c5d; --green-bg:#e3ebd8; --red:#b0553c;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(255,255,255,.5), transparent 46%),
+    linear-gradient(145deg, #f2e8d5 0%, var(--paper) 65%, #e7d7ba 100%);
+  line-height:1.6;
+}
+.wrap{max-width:880px;margin:0 auto;padding:56px 28px 90px;}
+.hero{
+  padding:44px 40px;
+  border:2px solid rgba(223,208,178,.9);
+  border-radius:32px;
+  background:linear-gradient(135deg, rgba(252,247,236,.98), rgba(246,238,221,.85));
+  box-shadow:0 20px 44px -28px rgba(77,52,32,.55);
+  text-align:center;
+}
+.hero .emoji{font-size:52px;}
+.hero h1{
+  font-family:"Hanzipen SC","STKaiti",serif;
+  font-size:40px;
+  margin:12px 0 8px;
+  letter-spacing:1px;
+}
+.hero p{color:var(--sub);font-size:16px;max-width:520px;margin:0 auto;}
+.badges{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap;}
+.badge{
+  padding:6px 16px;border-radius:14px;font-size:13px;
+  background:var(--paper-light);border:2px solid var(--line);color:var(--brown);
+}
+section{margin-top:48px;}
+h2{
+  font-size:22px;margin-bottom:18px;color:var(--brown);
+  display:flex;align-items:center;gap:10px;
+}
+h2 .bar{width:6px;height:22px;border-radius:4px;background:linear-gradient(160deg,#6b4c37,var(--brown));display:inline-block;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;}
+.card{
+  padding:22px 24px;border-radius:24px;border:2px solid var(--line);
+  background:var(--card);box-shadow:0 14px 30px -26px rgba(77,52,32,.6);
+}
+.card h3{font-size:16px;margin-bottom:8px;color:var(--ink);}
+.card p{font-size:14px;color:var(--sub);}
+.list{list-style:none;padding:0;}
+.list li{
+  padding:16px 20px;margin-bottom:10px;border-radius:18px;
+  background:var(--card);border:2px solid var(--line-light);
+  font-size:14px;color:var(--sub);display:flex;gap:12px;
+}
+.list li b{color:var(--ink);flex:none;min-width:110px;}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:20px;overflow:hidden;border:2px solid var(--line);}
+th,td{padding:12px 18px;text-align:left;font-size:14px;border-bottom:2px dashed var(--line-light);}
+th{background:var(--paper-light);color:var(--brown);font-weight:600;}
+tr:last-child td{border-bottom:0;}
+.pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
+.pill{
+  padding:6px 16px;border-radius:20px;font-size:13px;color:var(--sub);
+  background:var(--paper-light);border:2px solid var(--line);
+}
+.note{
+  margin-top:48px;padding:22px 26px;border-radius:20px;
+  background:rgba(176,85,60,.08);border:2px dashed rgba(176,85,60,.35);
+  font-size:14px;color:var(--brown);
+}
+footer{margin-top:56px;text-align:center;color:var(--dim);font-size:13px;}
+footer a{color:var(--brown);text-decoration:none;font-weight:600;}
+code{background:var(--paper-light);padding:2px 6px;border-radius:6px;font-size:13px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="emoji">☕</div>
+    <h1>豆豆小仓库</h1>
+    <p>一个只给自己用的咖啡记账本 —— 记录每天喝的咖啡，管理咖啡豆和辅料库存，自动算成本和营养。原生微信小程序，数据存在本地，不需要服务器。</p>
+    <div class="badges">
+      <span class="badge">微信小程序</span>
+      <span class="badge">TypeScript</span>
+      <span class="badge">本地存储</span>
+      <span class="badge">自用工具</span>
+    </div>
+  </div>
+
+  <section>
+    <h2><span class="bar"></span>核心是三件事</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>① 记一杯</h3>
+        <p>选品类、选温度（热/常温/冰）、选豆子、选辅料，自动算钱和营养，一键保存。</p>
+      </div>
+      <div class="card">
+        <h3>② 管库存</h3>
+        <p>咖啡豆和牛奶/椰子水都有余量，喝一杯扣一杯，删记录会自动归还。</p>
+      </div>
+      <div class="card">
+        <h3>③ 看统计</h3>
+        <p>每天/每周/每月喝了多少、花了多少钱，日历一目了然，点哪天都能查看和改。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="bar"></span>首页 —— 今天喝什么</h2>
+    <ul class="list">
+      <li><b>选品类</b>拖拽排序后的前 3 个品类 + "其他"，温度单独选（热 / 常温 / 冰）</li>
+      <li><b>选豆子</b>按余量比例显示进度条，选中后自动扣库存</li>
+      <li><b>调用量</b>用豆量支持现场加减或直接输入，不用去设置改默认值</li>
+      <li><b>选辅料</b>牛奶/椰子水/自定义饮品联动库存，扣完会提示余量不足</li>
+      <li><b>保存</b>拍照、评分，成本和咖啡因/蛋白质/脂肪/糖分实时算好</li>
+      <li><b>咖啡日历</b>小圆点标记有记录的日期，点进去能看那天的所有记录并左滑删除/修改</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="bar"></span>仓库 —— 豆仓 / 饮品架</h2>
+    <ul class="list">
+      <li><b>豆仓</b>按"正在喝 / 未启封 / 已归档"分组，显示余量进度条、赏味期状态、预计还能喝几天</li>
+      <li><b>长按删除</b>豆子或辅料卡片长按即可删除，5 秒内可撤销</li>
+      <li><b>存放方式</b>未启封的豆子可直接"转常温 / 转冷冻 / 启封"</li>
+      <li><b>补满</b>饮品架每个物料显示余量和大概还能做几杯，一键补满整瓶容量</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2><span class="bar"></span>个人设置</h2>
+    <table>
+      <tr><th>功能</th><th>说明</th></tr>
+      <tr><td>咖啡品类管理</td><td>长按拖拽排序，前 3 个直接展示在首页，其余收进"其他"</td></tr>
+      <tr><td>默认消耗量</td><td>豆子每次用多少克、牛奶/椰子水每次用多少毫升</td></tr>
+      <tr><td>豆子清单</td><td>只看喝过的豆子，含杯数和评分</td></tr>
+      <tr><td>数据统计</td><td>周/月/年三种视角，花费、豆子消耗、日均用量，每日明细可跳转查看/修改</td></tr>
+      <tr><td>初始化数据</td><td>支持"只清空记录"（物料自动归还）或"全部初始化"（恢复出厂设置）</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2><span class="bar"></span>技术实现</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>原生小程序</h3>
+        <p>TypeScript + WXML + WXSS，微信开发者工具直接导入即可运行，无需额外构建工具链。</p>
+      </div>
+      <div class="card">
+        <h3>本地持久化</h3>
+        <p>数据全部存在 <code>wx.setStorageSync</code> 本地缓存里，不需要服务器和后端配置。</p>
+      </div>
+      <div class="card">
+        <h3>模块化业务逻辑</h3>
+        <p><code>services/storage.ts</code> 管数据读写，<code>services/logs.ts</code> 管记录增删改和库存归还，<code>utils/calculations.ts</code> 管所有计算。</p>
+      </div>
+    </div>
+    <div class="pill-row">
+      <span class="pill">pages/home 首页</span>
+      <span class="pill">pages/warehouse 仓库</span>
+      <span class="pill">pages/settings 设置</span>
+      <span class="pill">pages/categories 品类排序</span>
+      <span class="pill">pages/bean-detail 豆子详情</span>
+      <span class="pill">pages/day-logs 当天记录</span>
+      <span class="pill">pages/statistics 统计</span>
+    </div>
+  </section>
+
+  <div class="note">
+    数据存在<b>当前设备</b>的微信本地缓存里，换手机或清除小程序数据会导致数据丢失，不会自动同步。想要多设备同步，需要接入微信云开发，代码结构已经把持久化逻辑单独抽出，替换起来改动量不大。
+  </div>
+
+  <footer>
+    豆豆小仓库 · 自用咖啡记账小程序 &nbsp;·&nbsp;
+    <a href="https://github.com/Judy-1003/doudou-warehouse">GitHub 仓库</a>
+  </footer>
+
+</div>
+</body>
+</html>
