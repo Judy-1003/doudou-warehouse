@@ -2,7 +2,14 @@
 
 一个只给自己用的咖啡记账本 —— 记录每天喝的咖啡，管理咖啡豆和辅料库存，自动算成本和营养。原生微信小程序，TypeScript 开发，数据存在手机本地，不需要服务器。
 
-📱 **[点击查看界面演示](https://judy-1003.github.io/doudou-warehouse/demo.html)** —— 用网页还原的首页/仓库/设置三个核心界面，不用装微信开发者工具也能看效果
+<p align="center">
+  <img src="docs/screenshots/home.png" width="220" alt="首页记一杯" />
+  <img src="docs/screenshots/home-summary.png" width="220" alt="首页今日合计与日历" />
+  <img src="docs/screenshots/warehouse.png" width="220" alt="豆仓库存管理" />
+  <img src="docs/screenshots/day-logs-edit.png" width="220" alt="修改某一杯记录" />
+</p>
+
+📱 **[点击查看界面演示](https://judy-1003.github.io/doudou-warehouse/demo.html)** —— 网页还原版，不用装微信开发者工具也能看效果
 
 📄 [查看项目介绍页](https://judy-1003.github.io/doudou-warehouse/)
 
