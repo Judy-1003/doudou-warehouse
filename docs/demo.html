@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>豆豆小仓库 · 界面演示</title>
+<style>
+:root{
+  --paper:#efe4cf; --paper-light:#f6eedd; --card:#fcf7ec; --line:#dfd0b2; --line-light:#eadcc2;
+  --ink:#3e2e21; --sub:#7b6650; --dim:#a79079; --brown:#5a4130; --brown-light:#7a5a40;
+  --green:#6f8c5d; --green-bg:#e3ebd8; --red:#b0553c;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif;
+  color:var(--ink);
+  background:#ded0b4;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:36px 16px 60px;
+}
+.page-head{max-width:420px;text-align:center;margin-bottom:28px;color:#4a3325;}
+.page-head h1{font-family:"Hanzipen SC","STKaiti",serif;font-size:30px;margin-bottom:8px;}
+.page-head p{font-size:14px;color:#6b5540;line-height:1.6;}
+.page-head a{color:#5a4130;font-weight:600;text-decoration:none;border-bottom:1px solid currentColor;}
+
+.tabs-switch{
+  display:flex;gap:8px;margin-bottom:22px;padding:5px;
+  background:rgba(255,255,255,.4);border:1px solid rgba(90,65,48,.2);border-radius:20px;
+}
+.tabs-switch button{
+  border:0;background:transparent;padding:9px 18px;border-radius:16px;
+  font-size:13px;color:#6b5540;cursor:pointer;font-weight:600;transition:.15s;
+}
+.tabs-switch button.on{color:#fbf5e8;background:linear-gradient(160deg,#6b4c37,var(--brown));box-shadow:0 6px 14px -8px rgba(60,40,22,.7);}
+
+.phone{
+  width:375px;
+  border-radius:44px;
+  background:linear-gradient(145deg, #f2e8d5 0%, var(--paper) 65%, #e7d7ba 100%);
+  box-shadow:0 30px 60px -20px rgba(60,40,22,.55), 0 0 0 10px #2a1d12, 0 0 0 12px #4a3325;
+  overflow:hidden;
+  position:relative;
+}
+.notch{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:150px;height:26px;background:#2a1d12;border-radius:0 0 16px 16px;z-index:20;
+}
+.screen{height:730px;overflow-y:auto;padding:26px 20px 0;position:relative;-ms-overflow-style:none;scrollbar-width:none;}
+.screen::-webkit-scrollbar{display:none;}
+.view{display:none;}
+.view.on{display:block;animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+.eyebrow{margin:20px 0 8px;color:var(--dim);font-size:10px;letter-spacing:2px;text-transform:uppercase;}
+.eyebrow:first-child{margin-top:0;}
+.hand-title{font-family:"Hanzipen SC","STKaiti",serif;font-size:26px;font-weight:600;letter-spacing:1px;}
+.numeric{font-variant-numeric:tabular-nums;}
+.card{margin-bottom:14px;padding:16px;border:1px solid var(--line);border-radius:20px;background:rgba(252,247,236,.96);box-shadow:0 10px 22px -18px rgba(77,52,32,.7), inset 0 1px 0 rgba(255,255,255,.7);}
+.row-between{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.muted{color:var(--dim);font-size:11px;line-height:1.5;}
+.subtext{color:var(--sub);font-size:12px;line-height:1.5;}
+
+.pill{display:inline-flex;flex:none;align-items:center;justify-content:center;min-height:34px;padding:0 15px;border:1px solid var(--line);border-radius:12px;color:var(--sub);background:var(--paper-light);font-size:13px;}
+.pill.active{border-color:var(--brown);color:#fbf5e8;background:linear-gradient(160deg,#6b4c37,var(--brown));box-shadow:0 6px 12px -8px rgba(60,40,22,.9);}
+.primary-button,.secondary-button{display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;border-radius:16px;font-size:14px;letter-spacing:2px;}
+.primary-button{color:#fbf5e8;background:linear-gradient(160deg,#6b4c37,var(--brown));box-shadow:0 8px 16px -8px rgba(60,40,22,.9);}
+.secondary-button{border:1px solid rgba(90,65,48,.26);color:var(--brown);background:rgba(238,226,204,.55);}
+.badge{display:inline-flex;align-items:center;min-height:22px;padding:0 9px;border-radius:8px;color:var(--green);background:var(--green-bg);font-size:10.5px;white-space:nowrap;}
+.badge.muted-badge{color:var(--dim);background:#e9e2d2;}
+.progress{height:5px;margin:9px 0 5px;overflow:hidden;border-radius:5px;background:#e6d9c0;}
+.progress-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,#8a6647,var(--brown));}
+
+/* 首页 */
+.hero-shell{position:relative;overflow:hidden;padding:15px 12px 11px 15px;border:1px solid rgba(223,208,178,.92);border-radius:18px;background:linear-gradient(135deg, rgba(252,247,236,.98), rgba(246,238,221,.84));box-shadow:0 6px 15px -12px rgba(77,52,32,.65);}
+.hero{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;min-height:88px;}
+.hero-title{font-size:26px;line-height:1.15;}
+.hero-date{display:inline-flex;align-items:center;min-height:22px;margin-top:9px;padding:0 9px;border:1px solid rgba(223,208,178,.82);border-radius:12px;color:var(--sub);background:rgba(255,252,244,.62);font-size:11px;}
+.hero-mascot{flex:none;width:56px;height:64px;display:flex;align-items:flex-end;justify-content:center;font-size:40px;}
+.drink-picker{margin-top:12px;padding:11px 11px 10px;border:1px solid rgba(223,208,178,.82);border-radius:15px;background:rgba(252,247,236,.62);}
+.picker-title{margin:0 2px 8px;color:var(--sub);font-size:11px;font-weight:600;letter-spacing:1px;}
+.drink-pills{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;}
+.drink-pill{min-height:32px;padding:0 4px;font-size:11.5px;}
+.picker-divider{height:1px;margin:9px 2px;background:var(--line-light);}
+.temperature-pills{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.temperature-pill{display:flex;align-items:center;justify-content:center;min-height:32px;border:1px solid var(--line);border-radius:10px;color:var(--sub);background:var(--paper-light);font-size:12.5px;}
+.temperature-pill.active{border-color:var(--brown);color:#fbf5e8;background:linear-gradient(160deg,#6b4c37,var(--brown));}
+.section-head{align-items:center;margin:17px 0 6px;}
+.section-head .eyebrow{margin:0;}
+.bean-pills{display:flex;gap:7px;overflow-x:auto;}
+.bean-pill{flex:none;min-width:100px;padding:8px 12px 9px;border:1px solid var(--line);border-radius:12px;background:var(--paper-light);}
+.bean-pill.active{border-color:var(--brown);color:#fbf5e8;background:linear-gradient(160deg,#6b4c37,var(--brown));}
+.bean-pill-name{font-size:13px;}
+.bean-pill-stock{margin-top:2px;color:var(--dim);font-size:10px;}
+.bean-pill.active .bean-pill-stock{color:rgba(251,245,232,.75);}
+.mini-progress{height:3px;margin-top:5px;overflow:hidden;border-radius:3px;background:#e1d3b8;}
+.mini-progress-fill{height:100%;border-radius:3px;background:var(--brown-light);}
+.bean-pill.active .mini-progress{background:rgba(255,250,235,.28);}
+.bean-pill.active .mini-progress-fill{background:#e4c68f;}
+.cup-card{margin-top:11px;}
+.cup-head{align-items:baseline;padding-bottom:9px;border-bottom:1px dashed var(--line-light);}
+.cup-title{font-size:14px;}
+.cup-price{font-size:26px;font-weight:700;}
+.cost-lines{padding:3px 0 2px;}
+.cost-line{display:flex;align-items:center;justify-content:space-between;min-height:31px;color:var(--sub);font-size:12px;}
+.gram-editor{display:flex;flex:1;align-items:center;justify-content:center;gap:5px;}
+.gram-button{display:flex;align-items:center;justify-content:center;width:27px;height:27px;border:1px solid rgba(90,65,48,.26);border-radius:9px;color:var(--brown);background:rgba(238,226,204,.7);font-size:14px;}
+.gram-input{width:48px;min-height:26px;padding:0 5px;border:1px solid var(--line);border-radius:8px;background:var(--paper-light);font-size:12.5px;text-align:center;}
+.gram-unit{color:var(--dim);font-size:11px;}
+.complete-button{margin-top:12px;}
+.summary-card{padding:13px;border:1px solid var(--line);border-radius:14px;background:var(--paper-light);}
+.summary-top{padding-bottom:10px;border-bottom:1px dashed var(--line-light);}
+.summary-top span:last-child{font-size:20px;font-weight:700;}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:9px;}
+.summary-grid div{padding:7px 1px;border:1px solid var(--line-light);border-radius:9px;background:var(--card);text-align:center;}
+.summary-grid div b{display:block;font-size:15px;font-weight:600;}
+.summary-grid div span{display:block;margin-top:2px;color:var(--dim);font-size:9px;}
+.log-card{display:flex;gap:11px;align-items:center;padding:11px;}
+.log-photo,.coffee-circle{flex:none;width:46px;height:46px;border-radius:11px;}
+.coffee-circle{background:radial-gradient(circle,#f1e1c6 0 32%,#c79e70 33% 42%,#5c4230 43% 52%,#3c2a1d 53%);}
+.coffee-circle.coconut{background:radial-gradient(circle,#e8ebdc 0 34%,#bfc7a8 35% 43%,#5c4230 44% 52%,#3c2a1d 53%);}
+.log-copy{flex:1;min-width:0;}
+.log-copy .row-between span:first-child{font-size:13px;}
+.log-copy .numeric{font-size:11px;}
+.calendar-card{padding:11px;}
+.calendar-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.calendar-title{font-size:14px;font-weight:600;}
+.calendar-arrow{display:flex;align-items:center;justify-content:center;width:26px;height:26px;border:1px solid var(--line);border-radius:50%;background:var(--paper-light);font-size:16px;color:var(--sub);}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.weekday-grid{margin-bottom:4px;color:var(--dim);font-size:10px;text-align:center;}
+.calendar-day{position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:1;border:1px solid var(--line-light);border-radius:8px;color:var(--dim);background:var(--paper-light);font-size:10px;}
+.calendar-day.blank{border-color:transparent;background:transparent;}
+.calendar-day.today{border-color:var(--brown);box-shadow:inset 0 0 0 1px var(--brown);}
+.calendar-day.has{background:var(--card);color:var(--ink);}
+.calendar-dot{position:absolute;bottom:2px;left:50%;width:4px;height:4px;border-radius:50%;background:var(--brown);transform:translateX(-50%);}
+.calendar-foot{margin-top:10px;color:var(--dim);font-size:10px;text-align:center;}
+
+/* 仓库 */
+.header-row{align-items:flex-end;margin-bottom:2px;}
+.segment{display:flex;padding:3px;border:1px solid var(--line);border-radius:12px;background:var(--paper-light);}
+.segment-item{padding:6px 12px;border-radius:9px;color:var(--sub);font-size:12px;}
+.segment-item.active{color:#fbf5e8;background:linear-gradient(160deg,#6b4c37,var(--brown));}
+.dark-entry{display:flex;align-items:center;justify-content:space-between;margin-top:13px;padding:13px 14px;border-radius:14px;color:#f7eedd;background:linear-gradient(135deg,#57402f,#43301f);}
+.entry-title{font-size:14px;font-weight:600;}
+.entry-sub{margin-top:2px;opacity:.7;font-size:10.5px;}
+.bean-card{padding:13px;}
+.bean-name-row{display:flex;align-items:baseline;gap:7px;margin:8px 0 3px;}
+.bean-name{font-size:17px;font-weight:700;}
+.roast-chip{padding:2px 8px;border-radius:7px;color:var(--brown);background:#f0e2c9;font-size:10px;}
+.stock-line{margin-top:5px;color:var(--sub);font-size:11px;}
+.action-row{margin-top:9px;}
+.action-buttons{display:flex;justify-content:flex-end;gap:7px;}
+.bean-action{display:flex;align-items:center;justify-content:center;min-width:58px;height:29px;padding:0 12px;border:1px solid rgba(90,65,48,.28);border-radius:10px;color:var(--brown);background:rgba(238,226,204,.7);font-size:11.5px;}
+.bean-action.solid{border-color:var(--brown);color:#fbf5e8;background:linear-gradient(160deg,#6b4c37,var(--brown));}
+.archived{opacity:.72;}
+.addon-name{font-size:15px;}
+.addon-stock{margin-top:8px;}
+.addon-stock-line{color:var(--sub);font-size:11px;}
+.restock{padding:5px 11px;border:1px solid rgba(90,65,48,.28);border-radius:10px;color:var(--brown);background:rgba(238,226,204,.7);font-size:10.5px;}
+.nutrition-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0 7px;}
+.nutrition-row div{padding:8px 3px;border:1px solid var(--line-light);border-radius:9px;background:var(--paper-light);text-align:center;}
+.nutrition-row b{display:block;font-size:14px;font-weight:600;}
+.nutrition-row span{display:block;margin-top:2px;color:var(--dim);font-size:9px;}
+
+/* 设置 */
+.settings-hero{display:flex;align-items:flex-end;justify-content:space-between;height:66px;margin-bottom:9px;}
+.settings-row{display:flex;align-items:center;gap:11px;min-height:62px;margin-bottom:10px;padding:11px 13px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:0 6px 13px -12px rgba(77,52,32,.7);}
+.settings-icon{display:flex;flex:none;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid rgba(90,65,48,.2);border-radius:11px;color:var(--brown);background:linear-gradient(150deg,rgba(246,238,221,.95),rgba(235,222,199,.85));font-size:15px;}
+.settings-copy{display:flex;flex:1;flex-direction:column;gap:2px;}
+.settings-copy span:first-child{font-size:14px;}
+.settings-copy span:last-child{color:var(--dim);font-size:11px;}
+.arrow{color:var(--dim);font-size:20px;}
+.danger-row{margin-top:17px;border-color:rgba(176,85,60,.42);background:rgba(243,222,214,.5);}
+.danger-row .settings-copy span:first-child{color:var(--red);}
+.danger-icon{border-color:rgba(176,85,60,.32);color:var(--red);background:rgba(255,251,246,.8);}
+
+.tabbar{position:sticky;bottom:0;display:flex;background:linear-gradient(180deg,rgba(239,228,207,.5),var(--paper) 40%);border-top:1px solid var(--line);padding:8px 0 14px;margin:14px -20px 0;}
+.tabbar div{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;color:var(--dim);}
+.tabbar div.on{color:var(--brown);font-weight:600;}
+.tabbar .ic{font-size:17px;}
+
+.caption{max-width:375px;margin-top:16px;text-align:center;color:#6b5540;font-size:12.5px;line-height:1.7;}
+.disclaimer{margin-top:20px;max-width:420px;padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.35);border:1px dashed rgba(90,65,48,.35);font-size:12px;color:#5a4130;text-align:center;line-height:1.7;}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>☕ 豆豆小仓库 · 界面演示</h1>
+  <p>自用咖啡记账小程序，本页用 HTML/CSS 还原核心界面供预览。<br>点击下方按钮切换页面 · <a href="index.html">← 返回项目介绍</a></p>
+</div>
+
+<div class="tabs-switch">
+  <button class="on" data-tab="home">首页</button>
+  <button data-tab="warehouse">仓库</button>
+  <button data-tab="settings">个人设置</button>
+</div>
+
+<div class="phone">
+  <div class="notch"></div>
+  <div class="screen">
+
+    <!-- 首页 -->
+    <div class="view on" id="view-home">
+      <div class="hero-shell">
+        <div class="hero">
+          <div>
+            <div class="eyebrow" style="margin-top:0">TODAY</div>
+            <div class="hand-title hero-title">今天喝什么</div>
+            <div class="hero-date numeric">9月14日 星期一</div>
+          </div>
+          <div class="hero-mascot">🐻</div>
+        </div>
+      </div>
+
+      <div class="drink-picker">
+        <div class="picker-title">咖啡品类</div>
+        <div class="drink-pills">
+          <div class="pill drink-pill active">拿铁</div>
+          <div class="pill drink-pill">美式</div>
+          <div class="pill drink-pill">椰青美式</div>
+          <div class="pill drink-pill" style="color:var(--dim)">其他</div>
+        </div>
+        <div class="picker-divider"></div>
+        <div class="picker-title">饮用温度</div>
+        <div class="temperature-pills">
+          <div class="temperature-pill">热</div>
+          <div class="temperature-pill">常温</div>
+          <div class="temperature-pill active">冰</div>
+        </div>
+      </div>
+
+      <div class="row-between section-head">
+        <div class="eyebrow">咖啡豆</div>
+        <div class="muted">豆仓现存 2 包</div>
+      </div>
+      <div class="bean-pills">
+        <div class="bean-pill active">
+          <div class="bean-pill-name">紫皮糖</div>
+          <div class="bean-pill-stock numeric">余量 142 / 227 克</div>
+          <div class="mini-progress"><div class="mini-progress-fill" style="width:63%"></div></div>
+        </div>
+        <div class="bean-pill">
+          <div class="bean-pill-name">666</div>
+          <div class="bean-pill-stock numeric">余量 3316.5 / 3333 克</div>
+          <div class="mini-progress"><div class="mini-progress-fill" style="width:99%"></div></div>
+        </div>
+      </div>
+
+      <div class="card cup-card">
+        <div class="row-between cup-head">
+          <div class="cup-title">拿铁 · 冰</div>
+          <div class="cup-price numeric">¥3.86</div>
+        </div>
+        <div class="cost-lines">
+          <div class="cost-line">
+            <span>咖啡豆</span>
+            <div class="gram-editor">
+              <div class="gram-button">−</div>
+              <div class="gram-input numeric">16.5</div>
+              <span class="gram-unit">g</span>
+              <div class="gram-button">＋</div>
+            </div>
+            <span class="numeric">¥1.65</span>
+          </div>
+          <div class="cost-line numeric"><span>明治 醇壹 250ml</span><span>¥2.21</span></div>
+        </div>
+        <div class="primary-button complete-button">完 成</div>
+      </div>
+
+      <div class="eyebrow">今日合计</div>
+      <div class="summary-card">
+        <div class="row-between summary-top numeric"><span>3 杯</span><span>¥11.20</span></div>
+        <div class="summary-grid">
+          <div><b class="numeric">544</b><span>咖啡因 mg</span></div>
+          <div><b class="numeric">6.6</b><span>蛋白质 g</span></div>
+          <div><b class="numeric">7.2</b><span>脂肪 g</span></div>
+          <div><b class="numeric">9.1</b><span>糖 g</span></div>
+        </div>
+      </div>
+
+      <div class="eyebrow">今天喝了</div>
+      <div class="card log-card">
+        <div class="coffee-circle"></div>
+        <div class="log-copy">
+          <div class="row-between"><span>拿铁 · 冰</span><span class="numeric">¥3.86</span></div>
+          <div class="muted numeric">紫皮糖 · 16.5g · 明治 醇壹 250ml</div>
+          <div class="muted numeric">14:12 · 未评分</div>
+        </div>
+      </div>
+      <div class="card log-card">
+        <div class="coffee-circle coconut"></div>
+        <div class="log-copy">
+          <div class="row-between"><span>椰青美式 · 常温</span><span class="numeric">¥5.34</span></div>
+          <div class="muted numeric">666 · 16.5g · 泰椰 200ml</div>
+          <div class="muted numeric">09:40 · 4.5 分</div>
+        </div>
+      </div>
+
+      <div class="eyebrow">咖啡日历</div>
+      <div class="card calendar-card">
+        <div class="calendar-header">
+          <div class="calendar-arrow">‹</div>
+          <div class="numeric calendar-title">2026 年 9 月</div>
+          <div class="calendar-arrow">›</div>
+        </div>
+        <div class="calendar-grid weekday-grid">
+          <span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span>
+        </div>
+        <div class="calendar-grid" id="cal-grid"></div>
+        <div class="calendar-foot numeric">本月 18 杯 · ¥64.30</div>
+      </div>
+    </div>
+
+    <!-- 仓库 -->
+    <div class="view" id="view-warehouse">
+      <div class="row-between header-row">
+        <div class="hand-title">我的豆仓</div>
+        <div class="segment">
+          <div class="segment-item active">豆仓</div>
+          <div class="segment-item">饮品架</div>
+        </div>
+      </div>
+      <div class="subtitle numeric muted" style="display:block;margin-top:6px;">2 包在喝 · 1 包未启封 · 共 3675g</div>
+
+      <div class="dark-entry">
+        <div><div class="entry-title">登记入库</div><div class="entry-sub">添加咖啡豆参数和日期</div></div>
+        <span>›</span>
+      </div>
+
+      <div class="eyebrow">正在喝 · 2 包</div>
+      <div class="card bean-card">
+        <div class="row-between"><span class="badge">养豆第 2 天</span><span class="muted">爱死拼</span></div>
+        <div class="bean-name-row"><span class="bean-name">紫皮糖</span><span class="roast-chip">中烘</span></div>
+        <div class="subtext">拼配</div>
+        <div class="row-between stock-line numeric"><span>余量 142g / 227g</span><span>未评分</span></div>
+        <div class="progress"><div class="progress-fill" style="width:63%"></div></div>
+        <div class="row-between action-row">
+          <span class="muted numeric">约 9 天喝完</span>
+          <div class="action-buttons">
+            <div class="bean-action">转冷冻</div>
+            <div class="bean-action">喝完</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bean-card">
+        <div class="row-between"><span class="badge">正值赏味期</span><span class="muted">发发发</span></div>
+        <div class="bean-name-row"><span class="bean-name">666</span></div>
+        <div class="subtext">的地方 · 中烘</div>
+        <div class="row-between stock-line numeric"><span>余量 3316.5g / 3333g</span><span>未评分</span></div>
+        <div class="progress"><div class="progress-fill" style="width:99%"></div></div>
+        <div class="row-between action-row">
+          <span class="muted numeric">约 200 天喝完</span>
+          <div class="action-buttons">
+            <div class="bean-action">转常温</div>
+            <div class="bean-action">喝完</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="eyebrow">未启封 · 1 包</div>
+      <div class="card bean-card">
+        <div class="row-between"><span class="badge">未启封 · 常温</span><span class="muted">哈哈哈</span></div>
+        <div class="bean-name-row"><span class="bean-name">哈哈</span><span class="roast-chip">深烘</span></div>
+        <div class="row-between stock-line numeric"><span>余量 227g / 227g</span><span>¥0.43/g</span></div>
+        <div class="progress"><div class="progress-fill" style="width:100%"></div></div>
+        <div class="action-row action-buttons">
+          <div class="bean-action">转冷冻</div>
+          <div class="bean-action solid">启封</div>
+        </div>
+      </div>
+
+      <div class="eyebrow">已归档 · 1 包</div>
+      <div class="card bean-card archived">
+        <div class="row-between"><span class="badge muted-badge">已喝完</span><span class="muted">明治</span></div>
+        <div class="bean-name-row"><span class="bean-name">燕麦拿铁豆</span></div>
+        <div class="row-between stock-line numeric"><span>喝完 2026-09-02</span><span>4.0 分</span></div>
+      </div>
+    </div>
+
+    <!-- 个人设置 -->
+    <div class="view" id="view-settings">
+      <div class="settings-hero">
+        <div>
+          <div class="eyebrow" style="margin-top:0">SETTINGS</div>
+          <div class="hand-title">个人设置</div>
+        </div>
+        <div style="font-size:32px;">🐻</div>
+      </div>
+
+      <div class="settings-row">
+        <div class="settings-icon">☕</div>
+        <div class="settings-copy"><span>咖啡品类</span><span>首页 3 个 · 共 5 个</span></div>
+        <span class="arrow">›</span>
+      </div>
+      <div class="settings-row">
+        <div class="settings-icon">◌</div>
+        <div class="settings-copy"><span>默认消耗量</span><span class="numeric">豆子 16.5g · 牛奶 250ml</span></div>
+        <span class="arrow">›</span>
+      </div>
+      <div class="settings-row">
+        <div class="settings-icon">◒</div>
+        <div class="settings-copy"><span>豆子清单</span><span class="numeric">喝过 4 款 · 共 27 杯</span></div>
+        <span class="arrow">›</span>
+      </div>
+      <div class="settings-row">
+        <div class="settings-icon">▥</div>
+        <div class="settings-copy"><span>数据统计</span><span class="numeric">本周 82.5g · ¥64.30</span></div>
+        <span class="arrow">›</span>
+      </div>
+      <div class="settings-row danger-row">
+        <div class="settings-icon danger-icon">⟲</div>
+        <div class="settings-copy"><span>初始化数据</span><span class="numeric">27 条记录 · 4 包豆子 · 3 个物料</span></div>
+        <span class="arrow">›</span>
+      </div>
+
+      <div class="eyebrow">饮品架物料示例</div>
+      <div class="card" style="padding:13px;">
+        <div class="row-between"><span class="addon-name">明治 醇壹</span><span class="numeric muted">¥0.88/100ml</span></div>
+        <div class="muted numeric" style="margin-top:4px;">¥13.9 / 1000ml</div>
+        <div class="addon-stock">
+          <div class="row-between addon-stock-line numeric">
+            <span>余量 620ml · 约 2 杯</span>
+            <div class="restock">补满</div>
+          </div>
+          <div class="progress"><div class="progress-fill" style="width:62%"></div></div>
+        </div>
+        <div class="nutrition-row">
+          <div><b class="numeric">64</b><span>热量 kcal</span></div>
+          <div><b class="numeric">3.2</b><span>蛋白质 g</span></div>
+          <div><b class="numeric">3.6</b><span>脂肪 g</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabbar">
+      <div class="tab-item on" data-tab="home"><span class="ic">🏠</span>首页</div>
+      <div class="tab-item" data-tab="warehouse"><span class="ic">📦</span>仓库</div>
+      <div class="tab-item" data-tab="settings"><span class="ic">⚙️</span>个人设置</div>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer">
+  ⚠️ 这是用网页 HTML/CSS 还原的界面演示，仅用于展示布局与交互思路，不是真实小程序截图；数据均为示例数据。<br>
+  真实小程序需在微信内运行，源码见 <a href="https://github.com/Judy-1003/doudou-warehouse" style="color:#5a4130;font-weight:600;">GitHub 仓库</a>。
+</div>
+
+<script>
+function switchTab(tab){
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('on'));
+  document.getElementById('view-' + tab).classList.add('on');
+  document.querySelectorAll('.tabs-switch button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+  document.querySelectorAll('.tab-item').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+  document.querySelector('.screen').scrollTop = 0;
+}
+document.querySelectorAll('.tabs-switch button, .tab-item').forEach(function(el){
+  el.addEventListener('click', function(){ switchTab(this.dataset.tab); });
+});
+
+// 生成一个示例月历
+(function(){
+  var grid = document.getElementById('cal-grid');
+  var daysInMonth = 30, offset = 1; // 9月1日是周二 -> 前面空1格
+  var hasLog = [2,3,5,6,7,9,10,12,13,14,16,17,19,20,21,23,24];
+  var today = 14;
+  for (var i=0;i<offset;i++){
+    var b = document.createElement('div');
+    b.className = 'calendar-day blank';
+    grid.appendChild(b);
+  }
+  for (var d=1;d<=daysInMonth;d++){
+    var cell = document.createElement('div');
+    cell.className = 'calendar-day' + (hasLog.indexOf(d)>-1 ? ' has':'') + (d===today ? ' today':'');
+    cell.textContent = d;
+    if (hasLog.indexOf(d)>-1){
+      var dot = document.createElement('div');
+      dot.className = 'calendar-dot';
+      cell.appendChild(dot);
+    }
+    grid.appendChild(cell);
+  }
+})();
+</script>
+</body>
+</html>
